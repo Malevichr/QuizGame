@@ -2,6 +2,7 @@ package com.ru.malevich.quizgame
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ru.malevich.quizgame.game.GamePage
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
