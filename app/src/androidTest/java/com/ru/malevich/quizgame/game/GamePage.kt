@@ -5,11 +5,12 @@ import android.widget.LinearLayout
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
+import com.ru.malevich.quizgame.R
 import org.hamcrest.Matcher
 
 class GamePage(
     question: String,
-    private val choices: List<String>
+    choices: List<String>
 ) {
 
     private val containerIdMatcher: Matcher<View> = withParent(withId(R.id.rootLayout))
@@ -19,26 +20,36 @@ class GamePage(
     private val questionUi = QuestionUi(
         text = question,
         containerIdMatcher = containerIdMatcher,
-        containerclassIdMatcher = classIdMatcher
+        containerClassIdMatcher = classIdMatcher
     )
-    private val choicesUiList = choices.map {
+
+    private val choicesUiIdList = listOf(
+        R.id.firstChoiceButton,
+        R.id.secondChoiceButton,
+        R.id.thirdChoiceButton,
+        R.id.fourthChoiceButton,
+    )
+    private val choicesUiList = choices.mapIndexed { index, text ->
         ChoiceUi(
-            text = it,
+            id = choicesUiIdList[index],
+            text = text,
             containerIdMatcher = containerIdMatcher,
-            containerclassIdMatcher = classIdMatcher
+            containerClassIdMatcher = classIdMatcher
         )
     }
     private val checkUi = ButtonUi(
+        id = R.id.checkButton,
         textResId = R.string.check,
         colorHex = "#5358C5",
         containerIdMatcher = containerIdMatcher,
-        containerclassIdMatcher = classIdMatcher
+        containerClassIdMatcher = classIdMatcher
     )
     private val nextUi = ButtonUi(
+        id = R.id.nextButton,
         textResId = R.string.next,
         colorHex = "#C553BD",
         containerIdMatcher = containerIdMatcher,
-        containerclassIdMatcher = classIdMatcher
+        containerClassIdMatcher = classIdMatcher
     )
 
     fun assertAskedQuestionState() {
