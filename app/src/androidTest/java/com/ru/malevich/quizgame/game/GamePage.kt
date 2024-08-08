@@ -27,7 +27,7 @@ class GamePage(
         R.id.firstChoiceButton,
         R.id.secondChoiceButton,
         R.id.thirdChoiceButton,
-        R.id.fourthChoiceButton,
+        R.id.forthChoiceButton,
     )
     private val choicesUiList = choices.mapIndexed { index, text ->
         ChoiceUi(
