@@ -1,6 +1,6 @@
 package com.ru.malevich.quizgame
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -114,7 +114,7 @@ class GameViewModelTest {
         actual = viewModel.check()
         expected = GameUiState.AnswerCheckedState(
             question = "q1",
-            choices = listOf<ChoiceUiState>(
+            choices = listOf(
                 ChoiceUiState.Correct(text = "c1"),
                 ChoiceUiState.NotAvailableToChoose(text = "c2"),
                 ChoiceUiState.NotAvailableToChoose(text = "c3"),
@@ -133,14 +133,14 @@ class GameViewModelTest {
 }
 
 private class FakeRepository : GameRepository {
-    private val list: List<Any> = listOf<QuestionAndChoices>(
+    private val list: List<QuestionAndChoices> = listOf(
         QuestionAndChoices(
-            question = "q1".reversed(),
+            question = "q1",
             listOf("c1", "c2", "c3", "c4"),
             correctIndex = 0
         ),
         QuestionAndChoices(
-            question = "q2".reversed(),
+            question = "q2",
             listOf("c1", "c2", "c3", "c4"),
             correctIndex = 0
         ),
@@ -159,7 +159,7 @@ private class FakeRepository : GameRepository {
 
     override fun check(): CorrectAndUserChoiceIndexes {
         return CorrectAndUserChoiceIndexes(
-            correctIndex = questionAndChoices().correctIndex(),
+            correctIndex = questionAndChoices().correctIndex,
             userChoiceIndex = userChoiceIndex
         )
     }
