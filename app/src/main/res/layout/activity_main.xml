@@ -21,36 +21,28 @@
         android:id="@+id/firstChoiceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:backgroundTint="#58B6FF"
-        android:textColor="@android:color/white"
+        android:layout_margin="8dp"
         tools:text="first choice" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/secondChoiceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:backgroundTint="#58B6FF"
-        android:textColor="@android:color/white"
+        android:layout_margin="8dp"
         tools:text="second choice" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/thirdChoiceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:backgroundTint="#58B6FF"
-        android:textColor="@android:color/white"
+        android:layout_margin="8dp"
         tools:text="third choice" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/forthChoiceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:backgroundTint="#58B6FF"
-        android:textColor="@android:color/white"
+        android:layout_margin="8dp"
         tools:text="forth choice" />
 
     <Space
@@ -63,16 +55,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:backgroundTint="#C553BD"
-        android:text="@string/check"
-        android:textColor="@android:color/white" />
+        android:background="#C553BD"
+        android:text="@string/check" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/nextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:backgroundTint="#5358C5"
-        android:text="@string/next"
-        android:textColor="@android:color/white" />
+        android:background="#5358C5"
+        android:text="@string/next" />
 </LinearLayout>
