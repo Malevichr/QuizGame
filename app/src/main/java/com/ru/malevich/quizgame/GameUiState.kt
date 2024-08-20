@@ -2,8 +2,9 @@ package com.ru.malevich.quizgame
 
 import android.view.View
 import com.ru.malevich.quizgame.databinding.ActivityMainBinding
+import java.io.Serializable
 
-interface GameUiState {
+interface GameUiState : Serializable {
     fun update(binding: ActivityMainBinding)
 
     abstract class Abstract(

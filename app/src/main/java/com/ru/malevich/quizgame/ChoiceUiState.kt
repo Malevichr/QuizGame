@@ -2,8 +2,9 @@ package com.ru.malevich.quizgame
 
 import android.graphics.Color
 import androidx.appcompat.widget.AppCompatButton
+import java.io.Serializable
 
-interface ChoiceUiState {
+interface ChoiceUiState : Serializable {
     fun update(button: AppCompatButton)
     abstract class Abstract(
         private val text: String,
@@ -13,16 +14,15 @@ interface ChoiceUiState {
     ) : ChoiceUiState {
         override fun update(button: AppCompatButton) {
             button.text = text
-            if (isEnabled)
-                button.setBackgroundColor(Color.parseColor(color))
             button.isClickable = isClickable
             button.isEnabled = isEnabled
+            button.setBackgroundColor(Color.parseColor(color))
         }
     }
 
     data class NotAvailableToChoose(private val text: String) : Abstract(
         text = text,
-        color = "",
+        color = "#5F6E79",
         isClickable = false,
         isEnabled = false
     )
