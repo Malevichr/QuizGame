@@ -2,48 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
 
     <TextView
         android:id="@+id/questionTextView"
         android:layout_width="match_parent"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         tools:text="Question" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/firstChoiceButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        tools:text="first choice" />
+        android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/secondChoiceButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        tools:text="second choice" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/firstChoiceButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            tools:text="first choice" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/thirdChoiceButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        tools:text="third choice" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/secondChoiceButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            tools:text="second choice" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/forthChoiceButton"
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        tools:text="forth choice" />
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/thirdChoiceButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            tools:text="third choice" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/forthChoiceButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            tools:text="forth choice" />
+    </LinearLayout>
+
 
     <Space
         android:layout_width="match_parent"
