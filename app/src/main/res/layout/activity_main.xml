@@ -5,10 +5,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".views.MainActivity">
 
 
-    <TextView
+    <com.ru.malevich.quizgame.views.questiontextview.QuestionTextView
+        android:freezesText="true"
         android:id="@+id/questionTextView"
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -17,28 +18,28 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         tools:text="Question" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.ru.malevich.quizgame.views.choicebutton.ChoiceButton
         android:id="@+id/firstChoiceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         tools:text="first choice" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.ru.malevich.quizgame.views.choicebutton.ChoiceButton
         android:id="@+id/secondChoiceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         tools:text="second choice" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.ru.malevich.quizgame.views.choicebutton.ChoiceButton
         android:id="@+id/thirdChoiceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         tools:text="third choice" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.ru.malevich.quizgame.views.choicebutton.ChoiceButton
         android:id="@+id/forthChoiceButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,7 +51,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.1" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.ru.malevich.quizgame.views.visibilitybutton.VisibilityButton
         android:id="@+id/checkButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,7 +59,7 @@
         android:background="#C553BD"
         android:text="@string/check" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.ru.malevich.quizgame.views.visibilitybutton.VisibilityButton
         android:id="@+id/nextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
