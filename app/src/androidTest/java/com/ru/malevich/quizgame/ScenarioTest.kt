@@ -127,9 +127,9 @@ class ScenarioTest {
         gamePage.assertAnswerCheckedStateFirstIsCorrectSecondIsIncorrect()
 
         gamePage.clickNext()
-        gamePage.assertNotVisible()
+        gamePage.assertDoesNotExist()
 
-        val gameOverPage = GameOverPage(
+        var gameOverPage = GameOverPage(
             incorrects = 2,
             corrects = 0
         )
@@ -138,7 +138,7 @@ class ScenarioTest {
         gameOverPage.assertInitialState()
 
         gameOverPage.clickNewGame()
-        gameOverPage.asserNotVisible()
+        gameOverPage.asserDoesNotExist()
         //endregion
 
         //region 1 correct 1 incorrect
@@ -186,9 +186,9 @@ class ScenarioTest {
         gamePage.assertAnswerCheckedStateFirstIsCorrect()
 
         gamePage.clickNext()
-        gamePage.assertNotVisible()
+        gamePage.assertDoesNotExist()
 
-        val gameOverPage = GameOverPage(
+        gameOverPage = GameOverPage(
             incorrects = 1,
             corrects = 1
         )
@@ -197,7 +197,7 @@ class ScenarioTest {
         gameOverPage.assertInitialState()
 
         gameOverPage.clickNewGame()
-        gameOverPage.asserNotVisible()
+        gameOverPage.asserDoesNotExist()
         //endregion
 
         //region 2 correct
@@ -244,9 +244,9 @@ class ScenarioTest {
         gamePage.assertAnswerCheckedStateFirstIsCorrect()
 
         gamePage.clickNext()
-        gamePage.assertNotVisible()
+        gamePage.assertDoesNotExist()
 
-        val gameOverPage = GameOverPage(
+        gameOverPage = GameOverPage(
             incorrects = 0,
             corrects = 2
         )
