@@ -13,10 +13,13 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ScenarioTest {
     private lateinit var gamePage: GamePage
-
+    private fun recreate() {
+        activityScenarioRule.scenario.recreate()
+    }
     @Before
     fun setup(){
-        gamePage = GamePage(question = "What color is this sky?", choices = listOf(
+        gamePage = GamePage(
+            question = "What color is the sky?", choices = listOf(
             "blue", "green", "red", "yellow",
         ))
     }
@@ -30,13 +33,13 @@ class ScenarioTest {
     @Test
     fun testCaseNumber1() {
         gamePage.assertAskedQuestionState()
-        activityScenarioRule.scenario.recreate()
+        recreate()
         gamePage.assertAskedQuestionState()
 
 
         gamePage.clickFirstChoice()
         gamePage.assertFirstChoiceMadeState()
-        activityScenarioRule.scenario.recreate()
+        recreate()
         gamePage.assertFirstChoiceMadeState()
 
 
@@ -77,5 +80,179 @@ class ScenarioTest {
         gamePage.assertAskedQuestionState()
         activityScenarioRule.scenario.recreate()
         gamePage.assertAskedQuestionState()
+    }
+
+    /**
+     * QGTC-03
+     */
+    @Test
+    fun testCaseNumber3() {
+        // region 2 incorrect
+        gamePage.assertAskedQuestionState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAskedQuestionState()
+
+
+        gamePage.clickSecondChoice()
+        gamePage.assertSecondChoiceMadeState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertSecondChoiceMadeState()
+
+
+        gamePage.clickCheck()
+        gamePage.assertAnswerCheckedStateFirstIsCorrectSecondIsIncorrect()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAnswerCheckedStateFirstIsCorrectSecondIsIncorrect()
+
+        gamePage.clickNext()
+        gamePage = GamePage(
+            question = "What color is the grass?", choices = listOf(
+                "green", "blue", "red", "yellow",
+            )
+        )
+
+        gamePage.assertAskedQuestionState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAskedQuestionState()
+
+        gamePage.clickSecondChoice()
+        gamePage.assertSecondChoiceMadeState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertSecondChoiceMadeState()
+
+
+        gamePage.clickCheck()
+        gamePage.assertAnswerCheckedStateFirstIsCorrectSecondIsIncorrect()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAnswerCheckedStateFirstIsCorrectSecondIsIncorrect()
+
+        gamePage.clickNext()
+        gamePage.assertNotVisible()
+
+        val gameOverPage = GameOverPage(
+            incorrects = 2,
+            corrects = 0
+        )
+        gameOverPage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
+        gameOverPage.assertInitialState()
+
+        gameOverPage.clickNewGame()
+        gameOverPage.asserNotVisible()
+        //endregion
+
+        //region 1 correct 1 incorrect
+        gamePage = GamePage(
+            question = "What color is the blood?", choices = listOf(
+                "red", "blue", "green", "yellow",
+            )
+        )
+        gamePage.assertAskedQuestionState()
+        recreate()
+        gamePage.assertAskedQuestionState()
+
+
+        gamePage.clickSecondChoice()
+        gamePage.assertSecondChoiceMadeState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertSecondChoiceMadeState()
+
+
+        gamePage.clickCheck()
+        gamePage.assertAnswerCheckedStateFirstIsCorrectSecondIsIncorrect()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAnswerCheckedStateFirstIsCorrectSecondIsIncorrect()
+
+        gamePage.clickNext()
+        gamePage = GamePage(
+            question = "What color is the sun?", choices = listOf(
+                "yellow", "green", "blue", "red",
+            )
+        )
+
+        gamePage.assertAskedQuestionState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAskedQuestionState()
+
+        gamePage.clickFirstChoice()
+        gamePage.assertFirstChoiceMadeState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertFirstChoiceMadeState()
+
+
+        gamePage.clickCheck()
+        gamePage.assertAnswerCheckedStateFirstIsCorrect()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAnswerCheckedStateFirstIsCorrect()
+
+        gamePage.clickNext()
+        gamePage.assertNotVisible()
+
+        val gameOverPage = GameOverPage(
+            incorrects = 1,
+            corrects = 1
+        )
+        gameOverPage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
+        gameOverPage.assertInitialState()
+
+        gameOverPage.clickNewGame()
+        gameOverPage.asserNotVisible()
+        //endregion
+
+        //region 2 correct
+        gamePage = GamePage(
+            question = "What color is the sea?", choices = listOf(
+                "blue", "green", "red", "yellow",
+            )
+        )
+        gamePage.assertAskedQuestionState()
+        recreate()
+        gamePage.assertAskedQuestionState()
+
+        gamePage.clickFirstChoice()
+        gamePage.assertFirstChoiceMadeState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertFirstChoiceMadeState()
+
+
+        gamePage.clickCheck()
+        gamePage.assertAnswerCheckedStateFirstIsCorrect()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAnswerCheckedStateFirstIsCorrect()
+
+        gamePage.clickNext()
+        gamePage = GamePage(
+            question = "What color is the frog?", choices = listOf(
+                "green", "yellow", "blue", "red",
+            )
+        )
+
+        gamePage.assertAskedQuestionState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAskedQuestionState()
+
+        gamePage.clickFirstChoice()
+        gamePage.assertFirstChoiceMadeState()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertFirstChoiceMadeState()
+
+
+        gamePage.clickCheck()
+        gamePage.assertAnswerCheckedStateFirstIsCorrect()
+        activityScenarioRule.scenario.recreate()
+        gamePage.assertAnswerCheckedStateFirstIsCorrect()
+
+        gamePage.clickNext()
+        gamePage.assertNotVisible()
+
+        val gameOverPage = GameOverPage(
+            incorrects = 0,
+            corrects = 2
+        )
+        gameOverPage.assertInitialState()
+        activityScenarioRule.scenario.recreate()
+        gameOverPage.assertInitialState()
+        //endregion
     }
 }

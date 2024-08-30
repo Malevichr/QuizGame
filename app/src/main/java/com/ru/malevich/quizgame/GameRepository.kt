@@ -14,7 +14,7 @@ interface GameRepository {
         private val userChoiceIndex: IntCache,
         private val list: List<QuestionAndChoices> = listOf(
             QuestionAndChoices(
-                question = "What color is this sky?",
+                question = "What color is the sky?",
                 listOf("blue", "green", "red", "yellow"),
                 correctIndex = 0
             ),
