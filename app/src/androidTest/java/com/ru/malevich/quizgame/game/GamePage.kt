@@ -124,4 +124,8 @@ class GamePage(
     fun clickNext() {
         nextUi.click()
     }
+
+    fun assertNotVisible() {
+        TODO("Not yet implemented")
+    }
 }
