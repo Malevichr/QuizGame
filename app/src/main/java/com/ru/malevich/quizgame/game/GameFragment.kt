@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ru.malevich.quizgame.QuizApp
 import com.ru.malevich.quizgame.databinding.FragmentGameBinding
+import com.ru.malevich.quizgame.gameover.NavigateToGameOver
 
 class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
@@ -35,7 +36,7 @@ class GameFragment : Fragment() {
                 binding.nextButton,
                 binding.checkButton
             )
-//            uiState.navigate(requireActivity() as NavigateToGameOver)
+            uiState.navigate(requireActivity() as NavigateToGameOver)
         }
 
         binding.firstChoiceButton.setOnClickListener {

@@ -197,6 +197,6 @@ private class FakeRepository : GameRepository {
         userChoiceIndex = -1
     }
     override fun isLastQuestion(): Boolean {
-        return index == list.size
+        return index + 1 == list.size
     }
 }
