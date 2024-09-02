@@ -1,10 +1,10 @@
-package com.ru.malevich.quizgame.views
+package com.ru.malevich.quizgame.game
 
-import com.ru.malevich.quizgame.views.choicebutton.ChoiceUiState
-import com.ru.malevich.quizgame.views.choicebutton.UpdateChoiceButton
-import com.ru.malevich.quizgame.views.questiontextview.UpdateText
-import com.ru.malevich.quizgame.views.visibilitybutton.UpdateVisibility
-import com.ru.malevich.quizgame.views.visibilitybutton.VisibilityUiState
+import com.ru.malevich.quizgame.presentation.views.choicebutton.ChoiceUiState
+import com.ru.malevich.quizgame.presentation.views.choicebutton.UpdateChoiceButton
+import com.ru.malevich.quizgame.presentation.views.questiontextview.UpdateText
+import com.ru.malevich.quizgame.presentation.views.visibilitybutton.UpdateVisibility
+import com.ru.malevich.quizgame.presentation.views.visibilitybutton.VisibilityUiState
 import java.io.Serializable
 
 interface GameUiState : Serializable {

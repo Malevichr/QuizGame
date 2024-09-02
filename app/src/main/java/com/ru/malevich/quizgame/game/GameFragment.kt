@@ -1,29 +1,30 @@
-package com.ru.malevich.quizgame.views
+package com.ru.malevich.quizgame.game
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.ru.malevich.quizgame.QuizApp
-import com.ru.malevich.quizgame.R
-import com.ru.malevich.quizgame.databinding.ActivityMainBinding
+import com.ru.malevich.quizgame.databinding.FragmentGameBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var uiState: GameUiState
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+class GameFragment : Fragment() {
+    private var _binding: FragmentGameBinding? = null
+    private val binding get() = _binding!!
 
-        val viewModel = (application as QuizApp).viewModel
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentGameBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val viewModel = (requireActivity().application as QuizApp).gameViewModel
+        lateinit var uiState: GameUiState
         val update: () -> Unit = {
             uiState.update(
                 binding.questionTextView,
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
                 binding.nextButton,
                 binding.checkButton
             )
+//            uiState.navigate(requireActivity() as NavigateToGameOver)
         }
 
         binding.firstChoiceButton.setOnClickListener {
@@ -65,4 +67,8 @@ class MainActivity : AppCompatActivity() {
         update.invoke()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

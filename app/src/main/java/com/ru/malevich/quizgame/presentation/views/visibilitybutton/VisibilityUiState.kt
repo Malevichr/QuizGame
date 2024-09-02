@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame.views.visibilitybutton
+package com.ru.malevich.quizgame.presentation.views.visibilitybutton
 
 import android.view.View
 import java.io.Serializable
