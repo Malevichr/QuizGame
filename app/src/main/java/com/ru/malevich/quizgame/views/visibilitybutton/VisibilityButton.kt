@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame.presentation.views.visibilitybutton
+package com.ru.malevich.quizgame.views.visibilitybutton
 
 import android.content.Context
 import android.os.Parcelable

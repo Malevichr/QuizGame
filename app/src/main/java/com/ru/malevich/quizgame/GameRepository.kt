@@ -14,6 +14,8 @@ interface GameRepository {
     class Base(
         private val index: IntCache,
         private val userChoiceIndex: IntCache,
+        private val corrects: IntCache,
+        private val incorrects: IntCache,
         private val list: List<QuestionAndChoices> = listOf(
             QuestionAndChoices(
                 question = "What color is the sky?",
@@ -27,8 +29,8 @@ interface GameRepository {
             ),
             QuestionAndChoices(
                 question = "What color is the sun?",
-                listOf("green", "blue", "red", "yellow"),
-                correctIndex = 3
+                listOf("yellow", "green", "blue", "red"),
+                correctIndex = 0
             ),
         )
     ) : GameRepository {
@@ -42,9 +44,15 @@ interface GameRepository {
         }
 
         override fun check(): CorrectAndUserChoiceIndexes {
+            val correctIndex = questionAndChoices().correctIndex
+            val userIndex = userChoiceIndex.read()
+            if (correctIndex == userIndex)
+                corrects.increment()
+            else
+                incorrects.increment()
             return CorrectAndUserChoiceIndexes(
-                correctIndex = questionAndChoices().correctIndex,
-                userChoiceIndex = userChoiceIndex.read()
+                correctIndex,
+                userIndex
             )
         }
 

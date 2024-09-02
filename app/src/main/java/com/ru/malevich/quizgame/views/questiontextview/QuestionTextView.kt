@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame.presentation.views.questiontextview
+package com.ru.malevich.quizgame.views.questiontextview
 
 import android.content.Context
 import android.util.AttributeSet
@@ -17,7 +17,6 @@ class QuestionTextView : androidx.appcompat.widget.AppCompatTextView, UpdateText
     }
 
     override fun getFreezesText(): Boolean = true
-
 
 }
 
