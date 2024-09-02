@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame.views.questiontextview
+package com.ru.malevich.quizgame.presentation.views.questiontextview
 
 import android.content.Context
 import android.util.AttributeSet

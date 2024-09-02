@@ -1,7 +1,8 @@
 package com.ru.malevich.quizgame
 
-import com.ru.malevich.quizgame.views.GameUiState
-import com.ru.malevich.quizgame.views.choicebutton.ChoiceUiState
+import com.ru.malevich.quizgame.game.GameUiState
+import com.ru.malevich.quizgame.game.GameViewModel
+import com.ru.malevich.quizgame.presentation.views.choicebutton.ChoiceUiState
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

@@ -1,11 +1,11 @@
-package com.ru.malevich.quizgame.views.choicebutton
+package com.ru.malevich.quizgame.presentation.views.choicebutton
 
 import android.content.Context
 import android.graphics.Color
 import android.os.Parcelable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatButton
-import com.ru.malevich.quizgame.views.questiontextview.UpdateText
+import com.ru.malevich.quizgame.presentation.views.questiontextview.UpdateText
 
 
 class ChoiceButton : AppCompatButton, UpdateChoiceButton {

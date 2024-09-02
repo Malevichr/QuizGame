@@ -1,7 +1,7 @@
-package com.ru.malevich.quizgame
+package com.ru.malevich.quizgame.game
 
-import com.ru.malevich.quizgame.views.GameUiState
-import com.ru.malevich.quizgame.views.choicebutton.ChoiceUiState
+import com.ru.malevich.quizgame.GameRepository
+import com.ru.malevich.quizgame.presentation.views.choicebutton.ChoiceUiState
 
 class GameViewModel(private val repository: GameRepository) {
     fun chooseFirst(): GameUiState {

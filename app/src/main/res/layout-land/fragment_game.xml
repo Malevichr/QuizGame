@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".views.MainActivity">
+    tools:context=".presentation.MainActivity">
 
 
-    <com.ru.malevich.quizgame.views.questiontextview.QuestionTextView
+    <com.ru.malevich.quizgame.presentation.views.questiontextview.QuestionTextView
         android:freezesText="true"
         android:id="@+id/questionTextView"
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.ru.malevich.quizgame.views.choicebutton.ChoiceButton
+        <com.ru.malevich.quizgame.presentation.views.choicebutton.ChoiceButton
             android:id="@+id/firstChoiceButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:layout_weight="1"
             tools:text="first choice" />
 
-        <com.ru.malevich.quizgame.views.choicebutton.ChoiceButton
+        <com.ru.malevich.quizgame.presentation.views.choicebutton.ChoiceButton
             android:id="@+id/secondChoiceButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.ru.malevich.quizgame.views.choicebutton.ChoiceButton
+        <com.ru.malevich.quizgame.presentation.views.choicebutton.ChoiceButton
             android:id="@+id/thirdChoiceButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:layout_weight="1"
             tools:text="third choice" />
 
-        <com.ru.malevich.quizgame.views.choicebutton.ChoiceButton
+        <com.ru.malevich.quizgame.presentation.views.choicebutton.ChoiceButton
             android:id="@+id/forthChoiceButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.1" />
 
-    <com.ru.malevich.quizgame.views.visibilitybutton.VisibilityButton
+    <com.ru.malevich.quizgame.presentation.views.visibilitybutton.VisibilityButton
         android:id="@+id/checkButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
         android:background="#C553BD"
         android:text="@string/check" />
 
-    <com.ru.malevich.quizgame.views.visibilitybutton.VisibilityButton
+    <com.ru.malevich.quizgame.presentation.views.visibilitybutton.VisibilityButton
         android:id="@+id/nextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

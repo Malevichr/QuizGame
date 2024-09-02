@@ -17,7 +17,6 @@ class StatsTextView : AppCompatTextView, UpdateStats {
         attrs,
         defStyleAttr
     )
-
     override fun onSaveInstanceState(): Parcelable? {
         return super.onSaveInstanceState()?.let {
             val savedState = StatsSavedState(it)
@@ -29,31 +28,29 @@ class StatsTextView : AppCompatTextView, UpdateStats {
     override fun onRestoreInstanceState(state: Parcelable?) {
         val restoredState = state as StatsSavedState
         super.onRestoreInstanceState(restoredState.superState)
-        updateState(restoredState.restore())
+        update(restoredState.restore())
     }
 
-    override fun getFreezesText() = true
-    override fun updateState(statsUiState: StatsUiState) {
+    override fun update(statsUiState: StatsUiState) {
         state = statsUiState
         state.update(this)
     }
 
-    override fun updateUi(corrects: Int, incorrects: Int) {
-        setText(resources.getString(R.string.stats, corrects, incorrects))
+    override fun update(corrects: Int, incorrects: Int) {
+        text = resources.getString(R.string.stats, corrects, incorrects)
     }
 }
 
 interface StatsUiState : Serializable {
     fun update(textView: UpdateStats)
-    class Base(private val corrects: Int, private val incorrects: Int) : StatsUiState {
+    data class Base(private val corrects: Int, private val incorrects: Int) : StatsUiState {
         override fun update(textView: UpdateStats) {
-            textView.updateUi(corrects, incorrects)
+            textView.update(corrects, incorrects)
         }
-
     }
 }
 
 interface UpdateStats {
-    fun updateState(statsUiState: StatsUiState)
-    fun updateUi(corrects: Int, incorrects: Int)
+    fun update(statsUiState: StatsUiState)
+    fun update(corrects: Int, incorrects: Int)
 }

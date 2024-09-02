@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame.views.choicebutton
+package com.ru.malevich.quizgame.presentation.views.choicebutton
 
 import java.io.Serializable
 
