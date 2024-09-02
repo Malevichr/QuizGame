@@ -1,4 +1,4 @@
-package com.ru.malevich.unscramblegame.views.statstextview
+package com.ru.malevich.quizgame.views.statstextview
 
 import android.content.Context
 import android.os.Parcelable
@@ -17,6 +17,7 @@ class StatsTextView : AppCompatTextView, UpdateStats {
         attrs,
         defStyleAttr
     )
+
     override fun onSaveInstanceState(): Parcelable? {
         return super.onSaveInstanceState()?.let {
             val savedState = StatsSavedState(it)

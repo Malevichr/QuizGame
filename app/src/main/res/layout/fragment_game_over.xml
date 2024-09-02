@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ru.malevich.unscramblegame.views.statstextview.StatsTextView
+    <com.ru.malevich.quizgame.views.statstextview.StatsTextView
         android:id="@+id/statsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

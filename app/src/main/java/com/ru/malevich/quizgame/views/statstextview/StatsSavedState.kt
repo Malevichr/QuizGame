@@ -1,11 +1,9 @@
-package com.ru.malevich.unscramblegame.views.statstextview
-
+package com.ru.malevich.quizgame.views.statstextview
 
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.View
-
 
 class StatsSavedState : View.BaseSavedState {
 

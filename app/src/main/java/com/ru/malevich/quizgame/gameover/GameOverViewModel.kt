@@ -1,7 +1,10 @@
 package com.ru.malevich.quizgame.gameover
 
-import com.ru.malevich.unscramblegame.views.statstextview.StatsUiState
+import com.ru.malevich.quizgame.views.statstextview.StatsUiState
 
-class GameOverViewModel {
-    val statsUiState = StatsUiState.Base(1, 1)
+
+class GameOverViewModel(
+    repository: GameOverRepository
+) {
+    fun statsUiState() = StatsUiState.Base(1, 1)
 }
