@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 interface IntCache {
     fun save(newValue: Int)
     fun read(): Int
+    fun increment(): Int
     class Base(
         private val sharedPreferences: SharedPreferences,
         private val key: String,
@@ -16,6 +17,12 @@ interface IntCache {
 
         override fun read(): Int {
             return sharedPreferences.getInt(key, defaultValue)
+        }
+
+        override fun increment(): Int {
+            val newValue = read() + 1
+            save(newValue)
+            return newValue
         }
 
     }

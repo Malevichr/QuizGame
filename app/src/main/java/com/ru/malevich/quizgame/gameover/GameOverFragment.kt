@@ -27,7 +27,7 @@ class GameOverFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val viewModel: GameOverViewModel =
             (requireActivity().application as QuizApp).gameOverViewModel
-        binding.statsTextView.update(viewModel.statsUiState)
+        binding.statsTextView.update(viewModel.statsUiState())
         binding.newGameButton.setOnClickListener {
             (requireActivity() as NavigateToGame).navigateToGame()
 

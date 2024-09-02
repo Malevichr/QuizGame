@@ -4,7 +4,10 @@ import com.ru.malevich.quizgame.views.statstextview.StatsUiState
 
 
 class GameOverViewModel(
-    repository: GameOverRepository
+    private val repository: GameOverRepository
 ) {
-    fun statsUiState() = StatsUiState.Base(1, 1)
+    fun statsUiState(): StatsUiState {
+        val statsPair = repository.stats()
+        return StatsUiState.Base(statsPair.first, statsPair.second)
+    }
 }
