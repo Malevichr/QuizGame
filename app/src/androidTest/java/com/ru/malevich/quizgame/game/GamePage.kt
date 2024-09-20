@@ -19,7 +19,8 @@ class GamePage(
     private val classIdMatcher: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
 
-    private val questionUi = QuestionUi(
+    private val questionUi = TextUi(
+        R.id.questionTextView,
         text = question,
         containerIdMatcher = containerIdMatcher,
         containerClassIdMatcher = classIdMatcher
@@ -55,7 +56,7 @@ class GamePage(
     )
 
     fun assertAskedQuestionState() {
-        questionUi.assertTextVisible()
+        questionUi.assertVisible()
         choicesUiList.forEach {
             it.assertAvailableToChooseState()
         }
@@ -68,7 +69,7 @@ class GamePage(
     }
 
     fun assertFirstChoiceMadeState() {
-        questionUi.assertTextVisible()
+        questionUi.assertVisible()
         choicesUiList.first().assertNotAvailableToChooseState()
         for (i in 1 until choicesUiList.size) {
             choicesUiList[i].assertAvailableToChooseState()
@@ -82,7 +83,7 @@ class GamePage(
     }
 
     fun assertAnswerCheckedStateFirstIsCorrect() {
-        questionUi.assertTextVisible()
+        questionUi.assertVisible()
         choicesUiList.first().assertCorrectState()
         for (i in 1 until choicesUiList.size) {
             choicesUiList[i].assertNotAvailableToChooseState()
@@ -96,7 +97,7 @@ class GamePage(
     }
 
     fun assertSecondChoiceMadeState() {
-        questionUi.assertTextVisible()
+        questionUi.assertVisible()
 
         choicesUiList.forEachIndexed { index, choiceUi ->
             if (index == 1)
@@ -109,7 +110,7 @@ class GamePage(
     }
 
     fun assertAnswerCheckedStateFirstIsCorrectSecondIsIncorrect() {
-        questionUi.assertTextVisible()
+        questionUi.assertVisible()
 
         choicesUiList.forEachIndexed { index, choiceUi ->
             if (index == 0)
