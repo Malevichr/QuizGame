@@ -1,35 +1,36 @@
-package com.ru.malevich.quizgame.game
+package com.ru.malevich.quizgame.load
 
 import android.view.View
-import android.widget.TextView
+import android.widget.ProgressBar
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.ru.malevich.quizgame.R
 import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Matcher
 
-class QuestionUi(
-    text: String,
+class ProgressUi(
     containerIdMatcher: Matcher<View>,
-    containerClassIdMatcher: Matcher<View>
+    containerTypeMatcher: Matcher<View>
 ) {
-    private val interaction: ViewInteraction = onView(
+
+    private val interaction = onView(
         allOf(
+            withId(R.id.progressBar),
+            isAssignableFrom(ProgressBar::class.java),
             containerIdMatcher,
-            containerClassIdMatcher,
-            withId(R.id.questionTextView),
-            withText(text),
-            isAssignableFrom(TextView::class.java)
+            containerTypeMatcher
         )
     )
 
-    fun assertTextVisible() {
+    fun assertVisible() {
         interaction.check(matches(isDisplayed()))
     }
 
+    fun assertNotVisible() {
+        interaction.check(matches(not(isDisplayed())))
+    }
 }

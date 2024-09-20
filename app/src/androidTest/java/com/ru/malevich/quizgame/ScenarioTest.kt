@@ -3,6 +3,8 @@ package com.ru.malevich.quizgame
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ru.malevich.quizgame.game.GamePage
+import com.ru.malevich.quizgame.gameover.GameOverPage
+import com.ru.malevich.quizgame.load.LoadPage
 import com.ru.malevich.quizgame.presentation.MainActivity
 import org.junit.Before
 import org.junit.Rule
@@ -37,10 +39,7 @@ class ScenarioTest {
      */
     @Test
     fun testCaseNumber1() {
-        gamePage.assertAskedQuestionState()
-        recreate()
-        gamePage.assertAskedQuestionState()
-
+        testCaseNumber4()
 
         gamePage.clickFirstChoice()
         gamePage.assertFirstChoiceMadeState()
@@ -59,9 +58,7 @@ class ScenarioTest {
      */
     @Test
     fun testCaseNumber2(){
-        gamePage.assertAskedQuestionState()
-        activityScenarioRule.scenario.recreate()
-        gamePage.assertAskedQuestionState()
+        testCaseNumber4()
 
         gamePage.clickFirstChoice()
         gamePage.assertFirstChoiceMadeState()
@@ -93,9 +90,7 @@ class ScenarioTest {
     @Test
     fun testCaseNumber3() {
         // region 2 incorrect
-        gamePage.assertAskedQuestionState()
-        activityScenarioRule.scenario.recreate()
-        gamePage.assertAskedQuestionState()
+        testCaseNumber4()
 
 
         gamePage.clickSecondChoice()
@@ -148,6 +143,8 @@ class ScenarioTest {
 
         //region 1 correct 1 incorrect
         setup()
+        testCaseNumber4()
+
         gamePage.assertAskedQuestionState()
         recreate()
         gamePage.assertAskedQuestionState()
@@ -203,6 +200,8 @@ class ScenarioTest {
 
         //region 2 correct
         setup()
+        testCaseNumber4()
+
         gamePage.assertAskedQuestionState()
         recreate()
         gamePage.assertAskedQuestionState()
@@ -256,8 +255,12 @@ class ScenarioTest {
     /**
      * QGTC-04
      */
-    fun testCase4() {
+    fun testCaseNumber4() {
         val loadPage = LoadPage()
+        doWithRecreate { loadPage.assertProgressState() }
+
+        loadPage.waitTillError()
+
         doWithRecreate { loadPage.assertErrorState() }
 
         loadPage.clickRetry()

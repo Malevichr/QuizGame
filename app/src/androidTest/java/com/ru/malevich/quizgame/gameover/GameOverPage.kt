@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame
+package com.ru.malevich.quizgame.gameover
 
 import android.view.View
 import android.widget.FrameLayout
@@ -7,6 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
+import com.ru.malevich.quizgame.R
 import com.ru.malevich.quizgame.game.ButtonUi
 import org.hamcrest.Matcher
 
