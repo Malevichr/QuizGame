@@ -16,6 +16,11 @@ class ScenarioTest {
     private fun recreate() {
         activityScenarioRule.scenario.recreate()
     }
+    private fun doWithRecreate(operation: () -> Unit) {
+        operation.invoke()
+        recreate()
+        operation.invoke()
+    }
     @Before
     fun setup(){
         gamePage = GamePage(
@@ -142,11 +147,7 @@ class ScenarioTest {
         //endregion
 
         //region 1 correct 1 incorrect
-        gamePage = GamePage(
-            question = "What color is the blood?", choices = listOf(
-                "red", "blue", "green", "yellow",
-            )
-        )
+        setup()
         gamePage.assertAskedQuestionState()
         recreate()
         gamePage.assertAskedQuestionState()
@@ -165,8 +166,8 @@ class ScenarioTest {
 
         gamePage.clickNext()
         gamePage = GamePage(
-            question = "What color is the sun?", choices = listOf(
-                "yellow", "green", "blue", "red",
+            question = "What color is the grass?", choices = listOf(
+                "green", "blue", "red", "yellow",
             )
         )
 
@@ -201,11 +202,7 @@ class ScenarioTest {
         //endregion
 
         //region 2 correct
-        gamePage = GamePage(
-            question = "What color is the sea?", choices = listOf(
-                "blue", "green", "red", "yellow",
-            )
-        )
+        setup()
         gamePage.assertAskedQuestionState()
         recreate()
         gamePage.assertAskedQuestionState()
@@ -223,8 +220,8 @@ class ScenarioTest {
 
         gamePage.clickNext()
         gamePage = GamePage(
-            question = "What color is the frog?", choices = listOf(
-                "green", "yellow", "blue", "red",
+            question = "What color is the grass?", choices = listOf(
+                "green", "blue", "red", "yellow",
             )
         )
 
@@ -255,4 +252,21 @@ class ScenarioTest {
         gameOverPage.assertInitialState()
         //endregion
     }
+
+    /**
+     * QGTC-04
+     */
+    fun testCase4() {
+        val loadPage = LoadPage()
+        doWithRecreate { loadPage.assertErrorState() }
+
+        loadPage.clickRetry()
+
+        doWithRecreate { loadPage.assertProgressState() }
+
+        loadPage.waitTillGone()
+
+        doWithRecreate { gamePage.assertAskedQuestionState() }
+    }
+
 }
