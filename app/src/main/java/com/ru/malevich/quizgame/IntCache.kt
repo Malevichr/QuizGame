@@ -6,6 +6,7 @@ interface IntCache {
     fun save(newValue: Int)
     fun read(): Int
     fun increment(): Int
+    fun default(): Int
     class Base(
         private val sharedPreferences: SharedPreferences,
         private val key: String,
@@ -23,6 +24,11 @@ interface IntCache {
             val newValue = read() + 1
             save(newValue)
             return newValue
+        }
+
+        override fun default(): Int {
+            save(defaultValue)
+            return defaultValue
         }
 
     }

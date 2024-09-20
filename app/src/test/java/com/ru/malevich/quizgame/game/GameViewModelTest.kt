@@ -1,8 +1,7 @@
 package com.ru.malevich.quizgame.game
 
-import com.ru.malevich.quizgame.CorrectAndUserChoiceIndexes
-import com.ru.malevich.quizgame.GameRepository
-import com.ru.malevich.quizgame.QuestionAndChoices
+import com.ru.malevich.quizgame.MyViewModel
+import com.ru.malevich.quizgame.di.ClearViewModel
 import com.ru.malevich.quizgame.views.choicebutton.ChoiceUiState
 import org.junit.Assert
 import org.junit.Before
@@ -13,7 +12,10 @@ class GameViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = GameViewModel(repository = FakeRepository())
+        viewModel = GameViewModel(
+            repository = FakeRepository(),
+            clearViewModel = FakeClear()
+        )
     }
 
     /**
@@ -200,4 +202,15 @@ private class FakeRepository : GameRepository {
     override fun isLastQuestion(): Boolean {
         return index + 1 == list.size
     }
+
+    override fun clearProgress() {
+        TODO("Not yet implemented")
+    }
+}
+
+private class FakeClear : ClearViewModel {
+    override fun clear(viewModelClass: Class<out MyViewModel>) {
+
+    }
+
 }

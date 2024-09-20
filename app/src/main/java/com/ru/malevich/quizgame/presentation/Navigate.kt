@@ -8,11 +8,11 @@ import com.ru.malevich.quizgame.gameover.NavigateToGameOver
 interface Navigate : NavigateToGame, NavigateToGameOver {
     fun navigate(screen: Screen)
     override fun navigateToGame() {
-        navigate(GameScreen())
+        navigate(GameScreen)
     }
 
     override fun navigateToGameOver() {
-        navigate(GameOverScreen())
+        navigate(GameOverScreen)
     }
 }
 

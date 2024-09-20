@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame
+package com.ru.malevich.quizgame.game
 
 data class QuestionAndChoices(
     val question: String,

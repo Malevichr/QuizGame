@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.ru.malevich.quizgame.QuizApp
+import com.ru.malevich.quizgame.LoggedFragment
 import com.ru.malevich.quizgame.databinding.FragmentGameBinding
+import com.ru.malevich.quizgame.di.ProvideViewModel
 import com.ru.malevich.quizgame.gameover.NavigateToGameOver
 
-class GameFragment : Fragment() {
+class GameFragment : LoggedFragment("GameFragment") {
     private var _binding: FragmentGameBinding? = null
     private val binding get() = _binding!!
 
@@ -24,7 +24,8 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = (requireActivity().application as QuizApp).gameViewModel
+        val viewModel =
+            (requireActivity() as ProvideViewModel).makeViewModel(GameViewModel::class.java)
         lateinit var uiState: GameUiState
         val update: () -> Unit = {
             uiState.update(

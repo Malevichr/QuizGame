@@ -1,4 +1,6 @@
-package com.ru.malevich.quizgame
+package com.ru.malevich.quizgame.game
+
+import com.ru.malevich.quizgame.IntCache
 
 interface GameRepository {
     fun questionAndChoices(): QuestionAndChoices
@@ -10,6 +12,8 @@ interface GameRepository {
     fun next()
 
     fun isLastQuestion(): Boolean
+
+    fun clearProgress()
 
     class Base(
         private val index: IntCache,
@@ -27,11 +31,11 @@ interface GameRepository {
                 listOf("green", "blue", "red", "yellow"),
                 correctIndex = 0
             ),
-            QuestionAndChoices(
-                question = "What color is the sun?",
-                listOf("yellow", "green", "blue", "red"),
-                correctIndex = 0
-            ),
+//            QuestionAndChoices(
+//                question = "What color is the sun?",
+//                listOf("yellow", "green", "blue", "red"),
+//                correctIndex = 0
+//            ),
         )
     ) : GameRepository {
 
@@ -63,6 +67,11 @@ interface GameRepository {
 
         override fun isLastQuestion(): Boolean =
             index.read() + 1 == list.size
+
+        override fun clearProgress() {
+            index.default()
+            userChoiceIndex.default()
+        }
     }
 
 }

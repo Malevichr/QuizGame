@@ -3,6 +3,6 @@
     <string name="next">Next</string>
     <string name="check">Check</string>
     <string name="new_game">New Game</string>
-    <string name="stats">Game over\n Corrects: %d \n Incorrects: %d</string>
+    <string name="stats">Game over\nCorrects: %d\nIncorrects: %d</string>
 
 </resources>

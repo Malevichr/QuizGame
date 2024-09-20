@@ -25,7 +25,7 @@ class GameOverPage(incorrects: Int, corrects: Int) {
 
     private val newGameButton = ButtonUi(
         R.id.newGameButton,
-        R.string.newGame,
+        R.string.new_game,
         "#5358C5",
         containerIdMatcher,
         containerTypeMatcher
