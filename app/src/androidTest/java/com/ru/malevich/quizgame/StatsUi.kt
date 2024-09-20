@@ -1,7 +1,6 @@
 package com.ru.malevich.quizgame
 
 import android.view.View
-import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -9,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.ru.malevich.quizgame.views.statstextview.StatsTextView
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 
@@ -25,11 +25,9 @@ class StatsUi(
                 containerTypeMatcher,
                 withId(R.id.statsTextView),
                 withText(
-                    "Game over\n" +
-                            "Corrects: $corrects\n" +
-                            "Incorrects: $incorrects"
+                    "Game over\nCorrects: $corrects\nIncorrects: $incorrects"
                 ),
-                isAssignableFrom(TextView::class.java)
+                isAssignableFrom(StatsTextView::class.java)
             )
         )
 

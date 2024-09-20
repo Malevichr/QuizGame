@@ -1,9 +1,13 @@
 package com.ru.malevich.quizgame.game
 
-import com.ru.malevich.quizgame.GameRepository
+import com.ru.malevich.quizgame.MyViewModel
+import com.ru.malevich.quizgame.di.ClearViewModel
 import com.ru.malevich.quizgame.views.choicebutton.ChoiceUiState
 
-class GameViewModel(private val repository: GameRepository) {
+class GameViewModel(
+    private val repository: GameRepository,
+    private val clearViewModel: ClearViewModel,
+) : MyViewModel {
     fun chooseFirst(): GameUiState {
         repository.saveUserChoice(0)
         return GameUiState.ChoiceMade(
@@ -67,11 +71,13 @@ class GameViewModel(private val repository: GameRepository) {
     }
 
     fun next(): GameUiState {
-        val isLastQuestion = repository.isLastQuestion()
-        repository.next()
-        return if (isLastQuestion)
+        return if (repository.isLastQuestion()) {
+            repository.clearProgress()
+            clearViewModel.clear(GameViewModel::class.java)
             GameUiState.Finish
+        }
         else {
+            repository.next()
             init()
         }
     }
