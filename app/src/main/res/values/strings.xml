@@ -4,5 +4,7 @@
     <string name="check">Check</string>
     <string name="new_game">New Game</string>
     <string name="stats">Game over\nCorrects: %d\nIncorrects: %d</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="retry">Retry</string>
 
 </resources>

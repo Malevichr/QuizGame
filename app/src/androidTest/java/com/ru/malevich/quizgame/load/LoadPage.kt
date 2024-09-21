@@ -17,7 +17,6 @@ class LoadPage {
     private val progress = ProgressUi(
         containerIdMatcher = containerIdMatcher,
         containerTypeMatcher = containerTypeMatcher,
-
         )
     private val retryButton = ButtonUi(
         R.id.retryButton,
@@ -28,7 +27,7 @@ class LoadPage {
     )
     private val errorText = ErrorUi(
         R.id.error,
-        "No internet connection",
+        R.string.no_internet_connection,
         containerIdMatcher,
         containerTypeMatcher
     )
