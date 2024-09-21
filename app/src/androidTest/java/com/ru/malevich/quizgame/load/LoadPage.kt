@@ -20,7 +20,7 @@ class LoadPage {
         )
     private val retryButton = ButtonUi(
         R.id.retryButton,
-        R.string.retryButton,
+        R.string.retry,
         "#5358C5",
         containerIdMatcher,
         containerTypeMatcher
