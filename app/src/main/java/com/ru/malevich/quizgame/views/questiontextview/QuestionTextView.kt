@@ -2,6 +2,7 @@ package com.ru.malevich.quizgame.views.questiontextview
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.annotation.StringRes
 
 class QuestionTextView : androidx.appcompat.widget.AppCompatTextView, UpdateText {
     constructor(context: Context) : super(context)
@@ -16,10 +17,15 @@ class QuestionTextView : androidx.appcompat.widget.AppCompatTextView, UpdateText
         this.text = text
     }
 
+    override fun update(textResId: Int) {
+        setText(textResId)
+    }
+
     override fun getFreezesText(): Boolean = true
 
 }
 
 interface UpdateText {
     fun update(text: String)
+    fun update(@StringRes textResId: Int)
 }
