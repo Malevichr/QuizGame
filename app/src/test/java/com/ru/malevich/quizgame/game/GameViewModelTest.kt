@@ -195,7 +195,7 @@ private class FakeRepository : GameRepository {
     }
 
     override fun next() {
-        index = ++index % list.size
+        index = ++index
         userChoiceIndex = -1
     }
 
@@ -204,7 +204,6 @@ private class FakeRepository : GameRepository {
     }
 
     override fun clearProgress() {
-        TODO("Not yet implemented")
     }
 }
 

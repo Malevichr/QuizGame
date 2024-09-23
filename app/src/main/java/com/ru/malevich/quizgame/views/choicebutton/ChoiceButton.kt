@@ -50,6 +50,10 @@ class ChoiceButton : AppCompatButton, UpdateChoiceButton {
         this.text = text
     }
 
+    override fun update(textResId: Int) {
+        setText(textResId)
+    }
+
 
 }
 
