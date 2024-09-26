@@ -22,7 +22,7 @@ class LoadFragment : Fragment() {
         return view
     }
 
-    private val update = { uiState: LoadUiState ->
+    private val update: (LoadUiState) -> Unit = { uiState: LoadUiState ->
         uiState.show(
             binding.errorTextView,
             binding.retryButton,
@@ -34,7 +34,7 @@ class LoadFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = (requireActivity() as ProvideViewModel).makeViewModel(LoadViewModel::class.java)
-        update
+
         binding.retryButton.setOnClickListener {
             val uiState = viewModel.load()
             uiState.show(
@@ -44,7 +44,7 @@ class LoadFragment : Fragment() {
             )
         }
 
-        viewModel.load(firstRun = savedInstanceState == null)
+        viewModel.load(isFirstRun = savedInstanceState == null)
     }
 
     override fun onResume() {
