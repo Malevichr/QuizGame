@@ -2,6 +2,7 @@ package com.ru.malevich.quizgame.load
 
 import android.view.View
 import com.ru.malevich.quizgame.R
+import com.ru.malevich.quizgame.game.NavigateToGame
 import com.ru.malevich.quizgame.views.error.ErrorUiState
 import com.ru.malevich.quizgame.views.error.UpdateError
 import com.ru.malevich.quizgame.views.visibilitybutton.UpdateVisibility
@@ -12,6 +13,8 @@ interface LoadUiState {
         retryButton: UpdateVisibility,
         progressBar: UpdateVisibility
     )
+
+    fun navigate(navigateToGame: NavigateToGame) = Unit
 
     abstract class Abstract(
         private val errorUiState: ErrorUiState,
@@ -45,6 +48,10 @@ interface LoadUiState {
         ErrorUiState.Hide,
         View.GONE,
         View.GONE
-    )
+    ) {
+        override fun navigate(navigateToGame: NavigateToGame) {
+            navigateToGame.navigateToGame()
+        }
+    }
 
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ru.malevich.quizgame.databinding.FragmentLoadBinding
 import com.ru.malevich.quizgame.di.ProvideViewModel
+import com.ru.malevich.quizgame.game.NavigateToGame
 
 class LoadFragment : Fragment() {
     private var _binding: FragmentLoadBinding? = null
@@ -28,6 +29,7 @@ class LoadFragment : Fragment() {
             binding.retryButton,
             binding.progressBar
         )
+        uiState.navigate((requireActivity() as NavigateToGame).navigateToGame())
     }
     private lateinit var viewModel: LoadViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
