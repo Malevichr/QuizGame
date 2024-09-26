@@ -29,7 +29,7 @@ class LoadFragment : Fragment() {
             binding.retryButton,
             binding.progressBar
         )
-        uiState.navigate((requireActivity() as NavigateToGame).navigateToGame())
+        uiState.navigate((requireActivity() as NavigateToGame))
     }
     private lateinit var viewModel: LoadViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
