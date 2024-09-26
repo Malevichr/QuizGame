@@ -32,9 +32,11 @@ class LoadViewModelTest {
 
         viewModel.startUpdates(observer = fragment)
         assertEquals(1, observable.registerCalledCount)
+        assertEquals(1, observable.postUiStatesListCalled.size)
 
-        assertEquals(LoadUiState.Progress, fragment.statesList.first())
         assertEquals(1, fragment.statesList.size)
+        assertEquals(LoadUiState.Progress, fragment.statesList.first())
+
 
         repository.returnResult()
         assertEquals(LoadUiState.Success, observable.postUiStatesListCalled[1])
@@ -105,12 +107,12 @@ private class FakeLoadRepository : LoadRepository {
 
     var loadCalledCount = 0
     override fun load(resultCallback: (LoadResult) -> Unit) {
-        resultCallback.invoke(loadResult)
         loadCalledCount++
+        loadResultCallback = resultCallback
     }
 
     fun returnResult() {
-        loadResultCallback.invoke(loadResult)
+        loadResultCallback.invoke(loadResult!!)
     }
 }
 

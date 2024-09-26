@@ -36,12 +36,7 @@ class LoadFragment : Fragment() {
         viewModel = (requireActivity() as ProvideViewModel).makeViewModel(LoadViewModel::class.java)
 
         binding.retryButton.setOnClickListener {
-            val uiState = viewModel.load()
-            uiState.show(
-                binding.errorTextView,
-                binding.retryButton,
-                binding.progressBar
-            )
+            viewModel.load()
         }
 
         viewModel.load(isFirstRun = savedInstanceState == null)
