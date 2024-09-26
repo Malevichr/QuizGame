@@ -3,7 +3,7 @@ package com.ru.malevich.quizgame.load
 interface UiObserver : (LoadUiState) -> Unit
 
 interface UiObservable {
-    fun observe(observer: (LoadUiState) -> Unit)
+    fun register(observer: (LoadUiState) -> Unit)
 
     fun unregister()
 
@@ -12,10 +12,10 @@ interface UiObservable {
     class Base() : UiObservable {
         private var uiStateCached: LoadUiState? = null
         private var observerCached: ((LoadUiState) -> Unit)? = null
-        override fun observe(observer: (LoadUiState) -> Unit) {
+        override fun register(observer: (LoadUiState) -> Unit) {
             observerCached = observer
             if (uiStateCached != null) {
-                observerCached!!.invoke(uiStateCached)
+                observerCached!!.invoke(uiStateCached!!)
                 uiStateCached = null
             }
         }
