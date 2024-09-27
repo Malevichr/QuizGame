@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame.load
+package com.ru.malevich.quizgame.load.data
 
 interface LoadResult {
     fun message(): String

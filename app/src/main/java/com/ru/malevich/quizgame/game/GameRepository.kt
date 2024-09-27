@@ -2,7 +2,7 @@ package com.ru.malevich.quizgame.game
 
 import com.ru.malevich.quizgame.IntCache
 import com.ru.malevich.quizgame.StringCache
-import com.ru.malevich.quizgame.load.ParseQuestionAndChoices
+import com.ru.malevich.quizgame.load.data.ParseQuestionAndChoices
 
 interface GameRepository {
     fun questionAndChoices(): QuestionAndChoices

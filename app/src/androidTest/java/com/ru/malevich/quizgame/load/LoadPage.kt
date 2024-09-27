@@ -26,7 +26,7 @@ class LoadPage {
         containerTypeMatcher
     )
     private val errorText = ErrorUi(
-        R.id.`@+id/error_text_view`,
+        R.id.errorTextView,
         R.string.no_internet_connection,
         containerIdMatcher,
         containerTypeMatcher
