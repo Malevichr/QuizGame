@@ -26,5 +26,4 @@ class LoadViewModel(
     fun stopUpdates() {
         observable.unregister()
     }
-
 }

@@ -9,7 +9,7 @@ import com.ru.malevich.quizgame.databinding.FragmentLoadBinding
 import com.ru.malevich.quizgame.di.ProvideViewModel
 import com.ru.malevich.quizgame.game.NavigateToGame
 
-class LoadFragment : Fragment() {
+class LoadFragment : Fragment(), UiObserver {
     private var _binding: FragmentLoadBinding? = null
     private val binding get() = _binding!!
 
@@ -57,5 +57,9 @@ class LoadFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun invoke(p1: LoadUiState) {
+        update.invoke(p1)
     }
 }
