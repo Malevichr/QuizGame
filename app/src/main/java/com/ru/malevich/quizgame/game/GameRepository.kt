@@ -1,6 +1,8 @@
 package com.ru.malevich.quizgame.game
 
 import com.ru.malevich.quizgame.IntCache
+import com.ru.malevich.quizgame.StringCache
+import com.ru.malevich.quizgame.load.ParseQuestionAndChoices
 
 interface GameRepository {
     fun questionAndChoices(): QuestionAndChoices
@@ -38,7 +40,31 @@ interface GameRepository {
 //            ),
         )
     ) : GameRepository {
+        constructor(
+            index: IntCache,
+            userChoiceIndex: IntCache,
+            corrects: IntCache,
+            incorrects: IntCache,
+            dataCache: StringCache,
+            parseQuestionAndChoices: ParseQuestionAndChoices
 
+        ) : this(
+            index = index,
+            userChoiceIndex = userChoiceIndex,
+            corrects = corrects,
+            incorrects = incorrects,
+            list = parseQuestionAndChoices.parse(dataCache.read()).results.map {
+                val list = mutableListOf<String>()
+                list.add(it.correct_answer)
+                list.addAll(it.incorrect_answers)
+                val finalList = list.shuffled()
+                val correctIndex = finalList.indexOf(it.correct_answer)
+                QuestionAndChoices(
+                    question = it.question,
+                    listOf = finalList,
+                    correctIndex = correctIndex
+                )
+            })
         override fun questionAndChoices(): QuestionAndChoices {
             return list[index.read()]
         }

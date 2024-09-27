@@ -9,7 +9,7 @@ interface UiObservable {
 
     fun postUiState(uiState: LoadUiState)
 
-    class Base() : UiObservable {
+    class Base : UiObservable {
         private var uiStateCached: LoadUiState? = null
         private var observerCached: ((LoadUiState) -> Unit)? = null
         override fun register(observer: (LoadUiState) -> Unit) {
