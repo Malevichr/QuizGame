@@ -4,8 +4,8 @@ import com.ru.malevich.quizgame.game.GameScreen
 import com.ru.malevich.quizgame.game.NavigateToGame
 import com.ru.malevich.quizgame.gameover.GameOverScreen
 import com.ru.malevich.quizgame.gameover.NavigateToGameOver
-import com.ru.malevich.quizgame.load.LoadScreen
-import com.ru.malevich.quizgame.load.NavigateToLoad
+import com.ru.malevich.quizgame.load.presentation.LoadScreen
+import com.ru.malevich.quizgame.load.presentation.NavigateToLoad
 
 interface Navigate : NavigateToGame, NavigateToGameOver, NavigateToLoad {
     fun navigate(screen: Screen)

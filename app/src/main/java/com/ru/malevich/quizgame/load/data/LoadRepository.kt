@@ -1,5 +1,6 @@
-package com.ru.malevich.quizgame.load
+package com.ru.malevich.quizgame.load.data
 
+import android.os.NetworkOnMainThreadException
 import com.google.gson.Gson
 import com.ru.malevich.quizgame.StringCache
 import java.net.HttpURLConnection
@@ -49,9 +50,11 @@ interface LoadRepository {
                     }
                 } else
                     resultCallback.invoke(LoadResult.Error("response code is not successful: ${response.response_code}"))
+            } catch (e: NetworkOnMainThreadException) {
+                resultCallback.invoke(LoadResult.Error(e.message ?: "на мейне дебил"))
             } catch (e: Exception) {
                 e.printStackTrace()
-                resultCallback.invoke(LoadResult.Error(e.message ?: "error"))
+                resultCallback.invoke(LoadResult.Error(e.message ?: "error exception"))
             } finally {
                 connection.disconnect()
             }

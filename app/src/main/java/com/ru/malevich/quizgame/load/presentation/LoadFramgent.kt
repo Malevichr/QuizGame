@@ -1,6 +1,8 @@
-package com.ru.malevich.quizgame.load
+package com.ru.malevich.quizgame.load.presentation
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,12 +26,14 @@ class LoadFragment : Fragment(), UiObserver {
     }
 
     private val update: (LoadUiState) -> Unit = { uiState: LoadUiState ->
-        uiState.show(
-            binding.errorTextView,
-            binding.retryButton,
-            binding.progressBar
-        )
-        uiState.navigate((requireActivity() as NavigateToGame))
+        Handler(Looper.getMainLooper()).post {
+            uiState.show(
+                binding.errorTextView,
+                binding.retryButton,
+                binding.progressBar
+            )
+            uiState.navigate((requireActivity() as NavigateToGame))
+        }
     }
     private lateinit var viewModel: LoadViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,6 +44,7 @@ class LoadFragment : Fragment(), UiObserver {
         binding.retryButton.setOnClickListener {
             viewModel.load()
         }
+
 
         viewModel.load(isFirstRun = savedInstanceState == null)
     }

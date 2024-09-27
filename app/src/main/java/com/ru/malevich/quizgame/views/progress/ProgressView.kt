@@ -38,5 +38,6 @@ class ProgressView : ProgressBar, UpdateVisibility {
 
     override fun update(visibilityUiState: VisibilityUiState) {
         state = visibilityUiState
+        state.update(this)
     }
 }

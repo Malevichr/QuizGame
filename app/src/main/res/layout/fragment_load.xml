@@ -12,7 +12,7 @@
         android:layout_height="wrap_content" />
 
     <com.ru.malevich.quizgame.views.error.ErrorView
-        android:id="@+id/error_text_view"
+        android:id="@+id/errorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="16dp"

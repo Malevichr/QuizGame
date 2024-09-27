@@ -1,5 +1,10 @@
 package com.ru.malevich.quizgame.load
 
+import com.ru.malevich.quizgame.load.data.LoadRepository
+import com.ru.malevich.quizgame.load.data.LoadResult
+import com.ru.malevich.quizgame.load.presentation.LoadUiState
+import com.ru.malevich.quizgame.load.presentation.LoadViewModel
+import com.ru.malevich.quizgame.load.presentation.UiObservable
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test

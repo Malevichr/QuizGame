@@ -255,6 +255,7 @@ class ScenarioTest {
     /**
      * QGTC-04
      */
+    @Test
     fun testCaseNumber4() {
         val loadPage = LoadPage()
         doWithRecreate { loadPage.assertProgressState() }

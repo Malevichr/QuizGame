@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame.load
+package com.ru.malevich.quizgame.load.presentation
 
 interface UiObserver : (LoadUiState) -> Unit
 

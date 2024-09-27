@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame.load
+package com.ru.malevich.quizgame.load.presentation
 
 import com.ru.malevich.quizgame.R
 import com.ru.malevich.quizgame.game.NavigateToGame
@@ -33,7 +33,7 @@ interface LoadUiState {
     }
 
     data class Error(private val message: String) : Abstract(
-        errorUiState = ErrorUiState.Show(R.string.no_internet_connection),
+        errorUiState = ErrorUiState.Show(R.string.no_internet_connection, message),
         retryVisibility = VisibilityUiState.Visible,
         progressVisibility = VisibilityUiState.Gone
     )
