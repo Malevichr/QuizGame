@@ -8,20 +8,7 @@ import java.net.URL
 
 interface LoadRepository {
 
-    fun load(resultCallback: (LoadResult) -> Unit)
-    class Test : LoadRepository {
-        private var countLoadCalled: Int = 0
-        override fun load(resultCallback: (LoadResult) -> Unit) {
-            resultCallback.invoke(
-                if (countLoadCalled % 2 == 0)
-                    LoadResult.Error("Hello")
-                else
-                    LoadResult.Success
-            )
-            countLoadCalled++
-
-        }
-    }
+    fun load(): LoadResult
 
     class Base(
         private val dataCache: StringCache,
@@ -31,7 +18,7 @@ interface LoadRepository {
     ) : LoadRepository {
         private val url = "https://opentdb.com/api.php?amount=10&type=multiple"
 
-        override fun load(resultCallback: (LoadResult) -> Unit) {
+        override fun load(): LoadResult {
             val connection = URL(url).openConnection() as HttpURLConnection
 
             try {
@@ -43,18 +30,18 @@ interface LoadRepository {
                 if (response.response_code == 0) {
                     val list = response.results
                     if (list.isEmpty())
-                        resultCallback.invoke(LoadResult.Error("empty data"))
+                        return LoadResult.Error("empty data")
                     else {
                         dataCache.save(data)
-                        resultCallback.invoke(LoadResult.Success)
+                        return LoadResult.Success
                     }
                 } else
-                    resultCallback.invoke(LoadResult.Error("response code is not successful: ${response.response_code}"))
+                    return LoadResult.Error("response code is not successful: ${response.response_code}")
             } catch (e: NetworkOnMainThreadException) {
-                resultCallback.invoke(LoadResult.Error(e.message ?: "на мейне дебил"))
+                return LoadResult.Error(e.message ?: "на мейне дебил")
             } catch (e: Exception) {
                 e.printStackTrace()
-                resultCallback.invoke(LoadResult.Error(e.message ?: "error exception"))
+                return LoadResult.Error(e.message ?: "error exception")
             } finally {
                 connection.disconnect()
             }

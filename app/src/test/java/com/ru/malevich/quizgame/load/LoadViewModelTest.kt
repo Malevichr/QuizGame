@@ -1,5 +1,6 @@
 package com.ru.malevich.quizgame.load
 
+import com.ru.malevich.quizgame.RunAsync
 import com.ru.malevich.quizgame.load.data.LoadRepository
 import com.ru.malevich.quizgame.load.data.LoadResult
 import com.ru.malevich.quizgame.load.presentation.LoadUiState
@@ -14,14 +15,17 @@ class LoadViewModelTest {
     private lateinit var fragment: FakeFragment
     private lateinit var repository: FakeLoadRepository
     private lateinit var observable: FakeUiObservable
+    private lateinit var runAsync: FakeRunAsync
 
     @Before
     fun setup() {
         repository = FakeLoadRepository()
         observable = FakeUiObservable()
+        runAsync = FakeRunAsync()
         viewModel = LoadViewModel(
             repository = repository,
-            observable = observable
+            observable = observable,
+            runAsync = runAsync
         )
         fragment = FakeFragment()
 
@@ -42,8 +46,8 @@ class LoadViewModelTest {
         assertEquals(1, fragment.statesList.size)
         assertEquals(LoadUiState.Progress, fragment.statesList.first())
 
+        runAsync.returnResult()
 
-        repository.returnResult()
         assertEquals(LoadUiState.Success, observable.postUiStatesListCalled[1])
         assertEquals(2, observable.postUiStatesListCalled.size)
 
@@ -69,7 +73,8 @@ class LoadViewModelTest {
         viewModel.stopUpdates()
         assertEquals(1, observable.unregisterCalledCount)
 
-        repository.returnResult()
+        runAsync.returnResult()
+
         assertEquals(
             LoadUiState.Error(message = "no internet"),
             observable.postUiStatesListCalled[1]
@@ -105,19 +110,14 @@ private class FakeFragment : (LoadUiState) -> Unit {
 
 private class FakeLoadRepository : LoadRepository {
     private var loadResult: LoadResult? = null
-    private var loadResultCallback: (LoadResult) -> Unit = {}
     fun expectedResult(loadResult: LoadResult) {
         this.loadResult = loadResult
     }
 
     var loadCalledCount = 0
-    override fun load(resultCallback: (LoadResult) -> Unit) {
+    override fun load(): LoadResult {
         loadCalledCount++
-        loadResultCallback = resultCallback
-    }
-
-    fun returnResult() {
-        loadResultCallback.invoke(loadResult!!)
+        return loadResult!!
     }
 }
 
@@ -150,5 +150,17 @@ private class FakeUiObservable : UiObservable {
             observerCached!!.invoke(uiState)
             uiStateCached = null
         }
+    }
+}
+private class FakeRunAsync : RunAsync {
+    private var ui: (Any) -> Unit = {}
+    private var result: Any? = null
+    override fun <T : Any> handleAsync(heavyOperation: () -> T, updateUi: (T) -> Unit) {
+        result = heavyOperation.invoke()
+        ui = updateUi as (Any) -> Unit
+    }
+
+    fun returnResult() {
+        ui.invoke(result!!)
     }
 }

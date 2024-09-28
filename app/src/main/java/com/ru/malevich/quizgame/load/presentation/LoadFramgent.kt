@@ -1,8 +1,6 @@
 package com.ru.malevich.quizgame.load.presentation
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +24,7 @@ class LoadFragment : Fragment(), UiObserver {
     }
 
     private val update: (LoadUiState) -> Unit = { uiState: LoadUiState ->
-        Handler(Looper.getMainLooper()).post {
+        requireActivity().runOnUiThread {
             uiState.show(
                 binding.errorTextView,
                 binding.retryButton,
