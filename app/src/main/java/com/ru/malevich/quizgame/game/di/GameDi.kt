@@ -9,14 +9,14 @@ import com.ru.malevich.quizgame.di.ProvideViewModel
 import com.ru.malevich.quizgame.game.GameRepository
 import com.ru.malevich.quizgame.game.GameViewModel
 import com.ru.malevich.quizgame.load.data.ParseQuestionAndChoices
-import com.ru.malevich.quizgame.load.data.Response
+import com.ru.malevich.quizgame.load.data.QuizResponse
 
 class GameModule(
     private val core: Core
 ) : Module<GameViewModel> {
     override fun viewModel(): GameViewModel {
 
-        val defaultResponseData = Response(-1, emptyList())
+        val defaultResponseData = QuizResponse(-1, emptyList())
         val defaultGsonString = core.gson.toJson(defaultResponseData)
         return GameViewModel(
             GameRepository.Base(

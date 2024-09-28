@@ -53,12 +53,12 @@ interface GameRepository {
             userChoiceIndex = userChoiceIndex,
             corrects = corrects,
             incorrects = incorrects,
-            list = parseQuestionAndChoices.parse(dataCache.read()).results.map {
+            list = parseQuestionAndChoices.parse(dataCache.read()).dataList.map {
                 val list = mutableListOf<String>()
-                list.add(it.correct_answer)
-                list.addAll(it.incorrect_answers)
+                list.add(it.correctAnswer)
+                list.addAll(it.incorrectAnswers)
                 val finalList = list.shuffled()
-                val correctIndex = finalList.indexOf(it.correct_answer)
+                val correctIndex = finalList.indexOf(it.correctAnswer)
                 QuestionAndChoices(
                     question = it.question,
                     listOf = finalList,

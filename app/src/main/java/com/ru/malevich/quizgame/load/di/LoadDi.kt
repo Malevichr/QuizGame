@@ -7,19 +7,46 @@ import com.ru.malevich.quizgame.di.Module
 import com.ru.malevich.quizgame.di.ProvideViewModel
 import com.ru.malevich.quizgame.load.data.LoadRepository
 import com.ru.malevich.quizgame.load.data.ParseQuestionAndChoices
-import com.ru.malevich.quizgame.load.data.Response
+import com.ru.malevich.quizgame.load.data.QuizResponse
+import com.ru.malevich.quizgame.load.data.QuizService
 import com.ru.malevich.quizgame.load.presentation.LoadViewModel
 import com.ru.malevich.quizgame.load.presentation.UiObservable
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
 
 class LoadModule(private val core: Core) : Module<LoadViewModel> {
     override fun viewModel(): LoadViewModel {
-        val defaultResponseData = Response(-1, emptyList())
+        val defaultResponseData = QuizResponse(-1, emptyList())
         val defaultGsonString = core.gson.toJson(defaultResponseData)
+        val client = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                setLevel(HttpLoggingInterceptor.Level.BODY)
+            })
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
+            .build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://opentdb.com/")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
+        val service = retrofit.create(QuizService::class.java)
         return LoadViewModel(
             LoadRepository.Base(
-                StringCache.Base(core.sharedPreferences, "question_data", defaultGsonString),
-                parseQuestionAndChoices = ParseQuestionAndChoices.Base(core.gson)
+                dataCache = StringCache.Base(
+                    core.sharedPreferences,
+                    "question_data",
+                    defaultGsonString
+                ),
+                parseQuestionAndChoices = ParseQuestionAndChoices.Base(core.gson),
+                service = service
             ),
             observable = UiObservable.Base()
         )
