@@ -1,24 +1,32 @@
 package com.ru.malevich.quizgame
 
-import android.os.Handler
-import android.os.Looper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 interface MyViewModel
 
 interface RunAsync {
     fun <T : Any> handleAsync(
-        heavyOperation: () -> T,
+        coroutineScope: CoroutineScope,
+        heavyOperation: suspend () -> T,
         updateUi: (T) -> Unit
     )
 
     class Base : RunAsync {
-        override fun <T : Any> handleAsync(heavyOperation: () -> T, updateUi: (T) -> Unit) {
-            Thread {
+
+        override fun <T : Any> handleAsync(
+            coroutineScope: CoroutineScope,
+            heavyOperation: suspend () -> T,
+            updateUi: (T) -> Unit
+        ) {
+            coroutineScope.launch(Dispatchers.IO) {
                 val result = heavyOperation.invoke()
-                Handler(Looper.getMainLooper()).post {
+                withContext(Dispatchers.Main) {
                     updateUi.invoke(result)
                 }
-            }.start()
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ import com.ru.malevich.quizgame.StringCache
 
 interface LoadRepository {
 
-    fun load(): LoadResult
+    suspend fun load(): LoadResult
 
     class Base(
         private val dataCache: StringCache,
@@ -15,7 +15,7 @@ interface LoadRepository {
         private val service: QuizService
     ) : LoadRepository {
 
-        override fun load(): LoadResult {
+        override suspend fun load(): LoadResult {
             try {
                 val result = service.questionAndChoices().execute()
                 if (result.isSuccessful) {
