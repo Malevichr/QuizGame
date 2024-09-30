@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.ru.malevich.quizgame.LoggedFragment
 import com.ru.malevich.quizgame.databinding.FragmentGameOverBinding
 import com.ru.malevich.quizgame.di.ProvideViewModel
-import com.ru.malevich.quizgame.game.NavigateToGame
+import com.ru.malevich.quizgame.load.presentation.NavigateToLoad
 
 class GameOverFragment : LoggedFragment("GameOverFragment") {
     private var _binding: FragmentGameOverBinding? = null
@@ -31,7 +31,7 @@ class GameOverFragment : LoggedFragment("GameOverFragment") {
             (requireActivity() as ProvideViewModel).makeViewModel(GameOverViewModel::class.java)
         binding.newGameButton.setOnClickListener {
             viewModel.clear()
-            (requireActivity() as NavigateToGame).navigateToGame()
+            (requireActivity() as NavigateToLoad).navigateToLoad()
         }
         val uiState = viewModel.init(savedInstanceState == null)
         binding.statsTextView.update(uiState)

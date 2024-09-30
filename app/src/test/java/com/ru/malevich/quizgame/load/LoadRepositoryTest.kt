@@ -2,7 +2,6 @@ package com.ru.malevich.quizgame.load
 
 import com.google.gson.Gson
 import com.ru.malevich.quizgame.load.data.QuestionAndChoicesCloud
-import com.ru.malevich.quizgame.load.data.Response
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.net.HttpURLConnection

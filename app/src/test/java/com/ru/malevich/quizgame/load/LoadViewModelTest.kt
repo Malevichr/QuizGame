@@ -6,6 +6,8 @@ import com.ru.malevich.quizgame.load.data.LoadResult
 import com.ru.malevich.quizgame.load.presentation.LoadUiState
 import com.ru.malevich.quizgame.load.presentation.LoadViewModel
 import com.ru.malevich.quizgame.load.presentation.UiObservable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -115,7 +117,7 @@ private class FakeLoadRepository : LoadRepository {
     }
 
     var loadCalledCount = 0
-    override fun load(): LoadResult {
+    override suspend fun load(): LoadResult {
         loadCalledCount++
         return loadResult!!
     }
@@ -152,12 +154,21 @@ private class FakeUiObservable : UiObservable {
         }
     }
 }
+
+@Suppress("UNCHECKED_CAST")
 private class FakeRunAsync : RunAsync {
     private var ui: (Any) -> Unit = {}
     private var result: Any? = null
-    override fun <T : Any> handleAsync(heavyOperation: () -> T, updateUi: (T) -> Unit) {
-        result = heavyOperation.invoke()
-        ui = updateUi as (Any) -> Unit
+    override fun <T : Any> handleAsync(
+        coroutineScope: CoroutineScope,
+        heavyOperation: suspend () -> T,
+        updateUi: (T) -> Unit
+    ) {
+        runBlocking {
+            result = heavyOperation.invoke()
+            ui = updateUi as (Any) -> Unit
+        }
+
     }
 
     fun returnResult() {
