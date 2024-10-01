@@ -38,7 +38,13 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
             .build()
 
         val service = retrofit.create(QuizService::class.java)
-        return LoadViewModel(
+        return if (core.runUiTests)
+            LoadViewModel(
+                LoadRepository.Fake(),
+                observable = UiObservable.Base(),
+                clearViewModel = core.clearViewModel,
+            )
+        else LoadViewModel(
             LoadRepository.Base(
                 dataCache = StringCache.Base(
                     core.sharedPreferences,
@@ -48,6 +54,7 @@ class LoadModule(private val core: Core) : Module<LoadViewModel> {
                 parseQuestionAndChoices = ParseQuestionAndChoices.Base(core.gson),
                 service = service
             ),
+            clearViewModel = core.clearViewModel,
             observable = UiObservable.Base()
         )
     }

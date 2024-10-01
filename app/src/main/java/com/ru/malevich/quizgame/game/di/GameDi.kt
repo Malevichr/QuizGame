@@ -18,19 +18,31 @@ class GameModule(
 
         val defaultResponseData = QuizResponse(-1, emptyList())
         val defaultGsonString = core.gson.toJson(defaultResponseData)
-        return GameViewModel(
-            GameRepository.Base(
-                index = IntCache.Base(core.sharedPreferences, "indexKey", 0),
-                userChoiceIndex = IntCache.Base(core.sharedPreferences, "userChoiceIndex", -1),
-                corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
-                incorrects = IntCache.Base(core.sharedPreferences, "incorrects", 0),
-                dataCache = StringCache.Base(
-                    core.sharedPreferences,
-                    "question_data",
-                    defaultGsonString
+        return if (core.runUiTests)
+            GameViewModel(
+                GameRepository.Base(
+                    index = IntCache.Base(core.sharedPreferences, "indexKey", 0),
+                    userChoiceIndex = IntCache.Base(core.sharedPreferences, "userChoiceIndex", -1),
+                    corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
+                    incorrects = IntCache.Base(core.sharedPreferences, "incorrects", 0),
+
+                    ),
+                clearViewModel = core.clearViewModel
+            )
+        else
+            GameViewModel(
+                GameRepository.Base(
+                    index = IntCache.Base(core.sharedPreferences, "indexKey", 0),
+                    userChoiceIndex = IntCache.Base(core.sharedPreferences, "userChoiceIndex", -1),
+                    corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
+                    incorrects = IntCache.Base(core.sharedPreferences, "incorrects", 0),
+                    dataCache = StringCache.Base(
+                        core.sharedPreferences,
+                        "question_data",
+                        defaultGsonString
+                    ),
+                    parseQuestionAndChoices = ParseQuestionAndChoices.Base(core.gson)
                 ),
-                parseQuestionAndChoices = ParseQuestionAndChoices.Base(core.gson)
-            ),
             clearViewModel = core.clearViewModel
         )
     }

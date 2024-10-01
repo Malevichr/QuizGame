@@ -7,6 +7,7 @@ class Core(
     context: Context,
     val clearViewModel: ClearViewModel
 ) {
+    val runUiTests = true
     val gson = Gson()
     val sharedPreferences = context.getSharedPreferences("quizAppData", Context.MODE_PRIVATE)
 }

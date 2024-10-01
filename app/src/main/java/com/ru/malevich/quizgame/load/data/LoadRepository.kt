@@ -2,6 +2,7 @@ package com.ru.malevich.quizgame.load.data
 
 import com.google.gson.Gson
 import com.ru.malevich.quizgame.StringCache
+import kotlinx.coroutines.delay
 
 interface LoadRepository {
 
@@ -14,7 +15,6 @@ interface LoadRepository {
         ),
         private val service: QuizService
     ) : LoadRepository {
-
         override suspend fun load(): LoadResult {
             try {
                 val result = service.questionAndChoices().execute()
@@ -36,6 +36,22 @@ interface LoadRepository {
                     return LoadResult.Error("error")
             } catch (e: Exception) {
                 return LoadResult.Error(e.message ?: "error")
+            }
+        }
+    }
+
+    class Fake(
+    ) : LoadRepository {
+        private var count = 0
+        override suspend fun load(): LoadResult {
+            if (count == 0) {
+                delay(1000)
+                count++
+                return LoadResult.Error("error")
+            } else {
+                delay(1000)
+                count--
+                return LoadResult.Success
             }
         }
     }

@@ -33,12 +33,7 @@ interface GameRepository {
                 listOf("green", "blue", "red", "yellow"),
                 correctIndex = 0
             ),
-//            QuestionAndChoices(
-//                question = "What color is the sun?",
-//                listOf("yellow", "green", "blue", "red"),
-//                correctIndex = 0
-//            ),
-        )
+        ),
     ) : GameRepository {
         constructor(
             index: IntCache,

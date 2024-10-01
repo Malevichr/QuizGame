@@ -16,7 +16,7 @@ import org.hamcrest.Matcher
 
 class ErrorUi(
     private val id: Int,
-    textResId: Int,
+    private val textResId: Int,
     containerIdMatcher: Matcher<View>,
     containerTypeMatcher: Matcher<View>
 ) {
@@ -25,13 +25,13 @@ class ErrorUi(
             containerIdMatcher,
             containerTypeMatcher,
             withId(id),
-            withText(textResId),
             isAssignableFrom(TextView::class.java)
         )
     )
 
     fun assertVisible() {
         interaction.check(matches(isDisplayed()))
+            .check(matches(withText(textResId)))
     }
 
     fun assertNotVisible() {

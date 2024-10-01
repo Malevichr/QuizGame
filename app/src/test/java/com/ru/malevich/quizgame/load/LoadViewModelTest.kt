@@ -1,6 +1,8 @@
 package com.ru.malevich.quizgame.load
 
+import com.ru.malevich.quizgame.MyViewModel
 import com.ru.malevich.quizgame.RunAsync
+import com.ru.malevich.quizgame.di.ClearViewModel
 import com.ru.malevich.quizgame.load.data.LoadRepository
 import com.ru.malevich.quizgame.load.data.LoadResult
 import com.ru.malevich.quizgame.load.presentation.LoadUiState
@@ -27,7 +29,8 @@ class LoadViewModelTest {
         viewModel = LoadViewModel(
             repository = repository,
             observable = observable,
-            runAsync = runAsync
+            runAsync = runAsync,
+            clearViewModel = FakeClear()
         )
         fragment = FakeFragment()
 
@@ -174,4 +177,10 @@ private class FakeRunAsync : RunAsync {
     fun returnResult() {
         ui.invoke(result!!)
     }
+}
+private class FakeClear : ClearViewModel {
+    override fun clear(viewModelClass: Class<out MyViewModel>) {
+
+    }
+
 }

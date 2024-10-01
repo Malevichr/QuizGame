@@ -14,10 +14,10 @@ interface ErrorUiState : Serializable {
 
     data class Show(private val textResId: Int, private val message: String = "") : ErrorUiState {
         override fun update(errorText: UpdateError) {
-            if (message == "")
+//            if (message == "")
                 errorText.updateTextResId(textResId)
-            else
-                errorText.updateText(message)
+//            else
+//                errorText.updateText(message)
 
             errorText.updateVisibility(View.VISIBLE)
         }
