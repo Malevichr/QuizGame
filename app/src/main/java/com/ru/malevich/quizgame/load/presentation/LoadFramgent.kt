@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import com.ru.malevich.quizgame.core.AbstractFragment
 import com.ru.malevich.quizgame.databinding.FragmentLoadBinding
 import com.ru.malevich.quizgame.di.ProvideViewModel
 import com.ru.malevich.quizgame.game.NavigateToGame
 
-class LoadFragment : Fragment(), UiObserver {
+class LoadFragment : AbstractFragment<LoadUiState, LoadViewModel>(), UiObserver {
     private var _binding: FragmentLoadBinding? = null
     private val binding get() = _binding!!
 
@@ -23,7 +23,7 @@ class LoadFragment : Fragment(), UiObserver {
         return view
     }
 
-    private val update: (LoadUiState) -> Unit = { uiState: LoadUiState ->
+    override val update: (LoadUiState) -> Unit = { uiState: LoadUiState ->
         requireActivity().runOnUiThread {
             uiState.show(
                 binding.errorTextView,
@@ -33,7 +33,7 @@ class LoadFragment : Fragment(), UiObserver {
             uiState.navigate((requireActivity() as NavigateToGame))
         }
     }
-    private lateinit var viewModel: LoadViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

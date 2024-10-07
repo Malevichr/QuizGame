@@ -1,11 +1,29 @@
-package com.ru.malevich.quizgame
+package com.ru.malevich.quizgame.core
 
+import com.ru.malevich.quizgame.load.presentation.UiObservable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-interface MyViewModel
+interface MyViewModel<T : Any> {
+
+    interface Async<T : Any> : MyViewModel<T> {
+        fun startUpdates(observer: (T) -> Unit)
+        fun stopUpdates()
+    }
+
+    abstract class Abstract<T : Any>(
+        protected val observable: UiObservable<T>
+    ) : Async<T> {
+        protected val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+        override fun startUpdates(observer: (T) -> Unit) = observable.register(observer)
+
+        override fun stopUpdates() = observable.unregister()
+    }
+}
 
 interface RunAsync {
     fun <T : Any> handleAsync(

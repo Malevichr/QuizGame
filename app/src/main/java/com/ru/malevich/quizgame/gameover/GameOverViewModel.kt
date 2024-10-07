@@ -1,14 +1,15 @@
 package com.ru.malevich.quizgame.gameover
 
-import com.ru.malevich.quizgame.MyViewModel
+import com.ru.malevich.quizgame.core.MyViewModel
 import com.ru.malevich.quizgame.di.ClearViewModel
+import com.ru.malevich.quizgame.load.presentation.LoadUiState
 import com.ru.malevich.quizgame.views.statstextview.StatsUiState
 
 
 class GameOverViewModel(
     private val repository: GameOverRepository,
     private val clearViewModel: ClearViewModel,
-) : MyViewModel {
+) : MyViewModel<LoadUiState> {
     fun statsUiState(): StatsUiState {
         val statsPair = repository.stats()
         return StatsUiState.Base(statsPair.first, statsPair.second)

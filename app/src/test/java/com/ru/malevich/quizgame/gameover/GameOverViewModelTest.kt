@@ -1,6 +1,6 @@
 package com.ru.malevich.quizgame.gameover
 
-import com.ru.malevich.quizgame.MyViewModel
+import com.ru.malevich.quizgame.core.MyViewModel
 import com.ru.malevich.quizgame.di.ClearViewModel
 import com.ru.malevich.quizgame.views.statstextview.StatsUiState
 import org.junit.Assert.assertEquals
@@ -31,8 +31,6 @@ private class FakeGameOverRepository : GameOverRepository {
 }
 
 private class FakeClear : ClearViewModel {
-    override fun clear(viewModelClass: Class<out MyViewModel>) {
-
+    override fun clear(viewModelClass: Class<out MyViewModel<*>>) {
     }
-
 }

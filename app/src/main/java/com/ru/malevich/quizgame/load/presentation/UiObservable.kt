@@ -2,17 +2,17 @@ package com.ru.malevich.quizgame.load.presentation
 
 interface UiObserver : (LoadUiState) -> Unit
 
-interface UiObservable {
-    fun register(observer: (LoadUiState) -> Unit)
+interface UiObservable<T : Any> {
+    fun register(observer: (T) -> Unit)
 
     fun unregister()
 
-    fun postUiState(uiState: LoadUiState)
+    fun postUiState(uiState: T)
 
-    class Base : UiObservable {
-        private var uiStateCached: LoadUiState? = null
-        private var observerCached: ((LoadUiState) -> Unit)? = null
-        override fun register(observer: (LoadUiState) -> Unit) {
+    abstract class Abstract<T : Any> : UiObservable<T> {
+        private var uiStateCached: T? = null
+        private var observerCached: ((T) -> Unit)? = null
+        override fun register(observer: (T) -> Unit) {
             observerCached = observer
             if (uiStateCached != null) {
                 observerCached!!.invoke(uiStateCached!!)
@@ -24,7 +24,7 @@ interface UiObservable {
             observerCached = null
         }
 
-        override fun postUiState(uiState: LoadUiState) {
+        override fun postUiState(uiState: T) {
             if (observerCached == null) {
                 uiStateCached = uiState
             } else {

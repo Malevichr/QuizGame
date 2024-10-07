@@ -1,6 +1,6 @@
 package com.ru.malevich.quizgame.gameover
 
-import com.ru.malevich.quizgame.IntCache
+import com.ru.malevich.quizgame.core.IntCache
 
 interface GameOverRepository {
     fun stats(): Pair<Int, Int>

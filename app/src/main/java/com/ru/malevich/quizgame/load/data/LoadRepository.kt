@@ -1,7 +1,10 @@
 package com.ru.malevich.quizgame.load.data
 
-import com.google.gson.Gson
-import com.ru.malevich.quizgame.StringCache
+import com.ru.malevich.quizgame.load.data.cache.ClearDatabase
+import com.ru.malevich.quizgame.load.data.cache.IncorrectCache
+import com.ru.malevich.quizgame.load.data.cache.QuestionAndChoicesDao
+import com.ru.malevich.quizgame.load.data.cache.QuestionCache
+import com.ru.malevich.quizgame.load.data.cloud.QuizService
 import kotlinx.coroutines.delay
 
 interface LoadRepository {
@@ -9,15 +12,14 @@ interface LoadRepository {
     suspend fun load(): LoadResult
 
     class Base(
-        private val dataCache: StringCache,
-        private val parseQuestionAndChoices: ParseQuestionAndChoices = ParseQuestionAndChoices.Base(
-            Gson()
-        ),
-        private val service: QuizService
+        private val service: QuizService,
+        private val dao: QuestionAndChoicesDao,
+        private val size: Int,
+        private val clearDatabase: ClearDatabase
     ) : LoadRepository {
         override suspend fun load(): LoadResult {
             try {
-                val result = service.questionAndChoices().execute()
+                val result = service.questionAndChoices(size).execute()
                 if (result.isSuccessful) {
                     val body = result.body()!!
                     if (body.responseCode == 0) {
@@ -25,8 +27,18 @@ interface LoadRepository {
                         if (list.isEmpty()) {
                             return LoadResult.Error("empty Data")
                         } else {
-                            val data = parseQuestionAndChoices.toString(body)
-                            dataCache.save(data)
+                            clearDatabase.clear()
+                            val questions: List<QuestionCache> =
+                                body.dataList.mapIndexed { index, data ->
+                                    val incorrects: List<IncorrectCache> =
+                                        data.incorrectAnswers.map {
+                                            IncorrectCache(questionId = index, choice = it)
+                                        }
+                                    dao.saveIncorrects(incorrects)
+                                    QuestionCache(index, data.question, data.correctAnswer)
+                                }
+                            dao.saveQuestions(questions)
+
                             return LoadResult.Success
                         }
                     } else
@@ -57,19 +69,3 @@ interface LoadRepository {
     }
 }
 
-
-interface ParseQuestionAndChoices {
-    fun toString(data: Any): String
-    fun parse(source: String): QuizResponse
-    class Base(
-        private val gson: Gson
-    ) : ParseQuestionAndChoices {
-        override fun toString(data: Any): String {
-            return gson.toJson(data)
-        }
-
-        override fun parse(source: String): QuizResponse {
-            return gson.fromJson(source, QuizResponse::class.java)
-        }
-    }
-}

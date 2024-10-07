@@ -3,8 +3,8 @@ package com.ru.malevich.quizgame.presentation
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.ru.malevich.quizgame.MyViewModel
 import com.ru.malevich.quizgame.R
+import com.ru.malevich.quizgame.core.MyViewModel
 import com.ru.malevich.quizgame.di.ProvideViewModel
 
 class MainActivity : AppCompatActivity(), Navigate, ProvideViewModel {
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), Navigate, ProvideViewModel {
         screen.show(R.id.container, supportFragmentManager)
     }
 
-    override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T {
+    override fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T {
         return (application as ProvideViewModel).makeViewModel(clazz)
     }
 }

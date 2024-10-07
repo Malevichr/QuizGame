@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame
+package com.ru.malevich.quizgame.core
 
 import com.ru.malevich.quizgame.di.ClearViewModel
 import com.ru.malevich.quizgame.di.Core
@@ -11,7 +11,7 @@ class QuizApplication : LoggedApplication(), ProvideViewModel {
     override fun onCreate() {
         super.onCreate()
         val clearViewModel = object : ClearViewModel {
-            override fun clear(viewModelClass: Class<out MyViewModel>) {
+            override fun clear(viewModelClass: Class<out MyViewModel<*>>) {
                 factory.clear(viewModelClass)
             }
         }
@@ -20,7 +20,7 @@ class QuizApplication : LoggedApplication(), ProvideViewModel {
         factory = ManageViewModels.Factory(make)
     }
 
-    override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T =
+    override fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T =
         factory.makeViewModel(clazz)
 
 }

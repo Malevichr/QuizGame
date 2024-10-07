@@ -1,26 +1,26 @@
 package com.ru.malevich.quizgame.di
 
-import com.ru.malevich.quizgame.MyViewModel
+import com.ru.malevich.quizgame.core.MyViewModel
 import com.ru.malevich.quizgame.game.di.ProvideGameViewModel
 import com.ru.malevich.quizgame.gameover.di.ProvideGameOverViewModel
 import com.ru.malevich.quizgame.load.di.ProvideLoadViewModel
 
 interface ProvideViewModel {
-    fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T
+    fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T
 
     abstract class AbstractChainLink(
         protected val core: Core,
         private val nextLink: ProvideViewModel,
-        private val viewModelClass: Class<out MyViewModel>,
+        private val viewModelClass: Class<out MyViewModel<*>>,
     ) : ProvideViewModel {
-        override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T {
+        override fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T {
             return if (clazz == viewModelClass)
                 module().viewModel() as T
             else
                 nextLink.makeViewModel(clazz)
         }
 
-        protected abstract fun module(): Module<out MyViewModel>
+        protected abstract fun module(): Module<out MyViewModel<*>>
     }
 
     class Make(
@@ -35,13 +35,13 @@ interface ProvideViewModel {
             chain = ProvideLoadViewModel(core, chain)
         }
 
-        override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T =
+        override fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T =
             chain.makeViewModel(clazz)
 
     }
 
     class Error : ProvideViewModel {
-        override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T {
+        override fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T {
             throw IllegalStateException("unknown class: $clazz")
         }
     }

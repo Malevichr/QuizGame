@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.ru.malevich.quizgame.LoggedFragment
+import com.ru.malevich.quizgame.core.LoggedFragment
 import com.ru.malevich.quizgame.databinding.FragmentGameOverBinding
 import com.ru.malevich.quizgame.di.ProvideViewModel
 import com.ru.malevich.quizgame.load.presentation.NavigateToLoad
