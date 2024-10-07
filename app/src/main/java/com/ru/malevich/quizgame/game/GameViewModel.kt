@@ -1,13 +1,21 @@
 package com.ru.malevich.quizgame.game
 
-import com.ru.malevich.quizgame.MyViewModel
+import com.ru.malevich.quizgame.core.MyViewModel
+import com.ru.malevich.quizgame.core.RunAsync
 import com.ru.malevich.quizgame.di.ClearViewModel
 import com.ru.malevich.quizgame.views.choicebutton.ChoiceUiState
 
 class GameViewModel(
+    observable: GameUiObservable,
     private val repository: GameRepository,
     private val clearViewModel: ClearViewModel,
-) : MyViewModel {
+    private val runAsync: RunAsync
+) : MyViewModel.Abstract<GameUiState>(observable) {
+
+    private val updateUi = { it: GameUiState ->
+        observable.postUiState(it)
+    }
+
     fun chooseFirst(): GameUiState {
         repository.saveUserChoice(0)
         return GameUiState.ChoiceMade(
@@ -56,25 +64,36 @@ class GameViewModel(
         )
     }
 
-    fun check(): GameUiState {
-        val correctAndUserChoiceIndexes = repository.check()
-        val listOfStates: List<ChoiceUiState> = List(4) { i ->
-            when (i) {
-                correctAndUserChoiceIndexes.correctIndex -> ChoiceUiState.Correct
-                correctAndUserChoiceIndexes.userChoiceIndex -> ChoiceUiState.NotCorrect
-                else -> ChoiceUiState.NotAvailableToChoose
-            }
-        }
-        return GameUiState.AnswerCheckedState(
-            listOfStates
+    fun check() {
+        runAsync.handleAsync(
+            viewModelScope,
+            heavyOperation = {
+                val correctAndUserChoiceIndexes = repository.check()
+
+                val listOfStates: List<ChoiceUiState> = List(4) { i ->
+                    when (i) {
+                        correctAndUserChoiceIndexes.correctIndex -> ChoiceUiState.Correct
+                        correctAndUserChoiceIndexes.userChoiceIndex -> ChoiceUiState.NotCorrect
+                        else -> ChoiceUiState.NotAvailableToChoose
+                    }
+                }
+                GameUiState.AnswerCheckedState(
+                    listOfStates
+                )
+            }, updateUi
         )
     }
 
-    fun next(): GameUiState {
-        return if (repository.isLastQuestion()) {
-            repository.clearProgress()
-            clearViewModel.clear(GameViewModel::class.java)
-            GameUiState.Finish
+    fun next() {
+        if (repository.isLastQuestion()) {
+            runAsync.handleAsync(
+                viewModelScope,
+                heavyOperation = {
+                    repository.clearProgress()
+                    clearViewModel.clear(GameViewModel::class.java)
+                    GameUiState.Finish
+                }, updateUi
+            )
         }
         else {
             repository.next()
@@ -82,15 +101,19 @@ class GameViewModel(
         }
     }
 
-    fun init(firstRun: Boolean = true): GameUiState {
-        return if (firstRun) {
-            val data = repository.questionAndChoices()
-            GameUiState.AskedQuestion(
-                data.question,
-                data.listOf
-            )
-        } else
-            GameUiState.Empty
+    fun init(firstRun: Boolean = true) {
+        runAsync.handleAsync(
+            coroutineScope = viewModelScope,
+            heavyOperation = {
+                if (firstRun) {
+                    val data = repository.questionAndChoices()
+                    GameUiState.AskedQuestion(
+                        data.question,
+                        data.listOf
+                    )
+                } else
+                    GameUiState.Empty
+            }, updateUi
+        )
     }
-
 }
