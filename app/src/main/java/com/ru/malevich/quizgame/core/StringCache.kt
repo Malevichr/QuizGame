@@ -1,4 +1,4 @@
-package com.ru.malevich.quizgame
+package com.ru.malevich.quizgame.core
 
 import android.content.SharedPreferences
 

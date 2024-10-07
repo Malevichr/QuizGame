@@ -1,7 +1,7 @@
 package com.ru.malevich.quizgame.gameover.di
 
-import com.ru.malevich.quizgame.IntCache
-import com.ru.malevich.quizgame.MyViewModel
+import com.ru.malevich.quizgame.core.IntCache
+import com.ru.malevich.quizgame.core.MyViewModel
 import com.ru.malevich.quizgame.di.Core
 import com.ru.malevich.quizgame.di.Module
 import com.ru.malevich.quizgame.di.ProvideViewModel
@@ -16,7 +16,7 @@ class ProvideGameOverViewModel(
     nextLink,
     GameOverViewModel::class.java
 ) {
-    override fun module(): Module<out MyViewModel> =
+    override fun module(): Module<out MyViewModel<*>> =
         GameOverModule(core)
 }
 

@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ru.malevich.quizgame.LoggedFragment
+import com.ru.malevich.quizgame.core.AbstractFragment
 import com.ru.malevich.quizgame.databinding.FragmentGameBinding
 import com.ru.malevich.quizgame.di.ProvideViewModel
 import com.ru.malevich.quizgame.gameover.NavigateToGameOver
 
-class GameFragment : LoggedFragment("GameFragment") {
+class GameFragment : AbstractFragment<GameUiState, GameViewModel>() {
     private var _binding: FragmentGameBinding? = null
     private val binding get() = _binding!!
 
@@ -22,12 +22,8 @@ class GameFragment : LoggedFragment("GameFragment") {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val viewModel =
-            (requireActivity() as ProvideViewModel).makeViewModel(GameViewModel::class.java)
-        lateinit var uiState: GameUiState
-        val update: () -> Unit = {
+    override val update = { uiState: GameUiState ->
+        requireActivity().runOnUiThread {
             uiState.update(
                 binding.questionTextView,
                 binding.firstChoiceButton,
@@ -39,34 +35,47 @@ class GameFragment : LoggedFragment("GameFragment") {
             )
             uiState.navigate(requireActivity() as NavigateToGameOver)
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = (requireActivity() as ProvideViewModel)
+            .makeViewModel(GameViewModel::class.java)
 
         binding.firstChoiceButton.setOnClickListener {
-            uiState = viewModel.chooseFirst()
-            update.invoke()
+            val uiState = viewModel.chooseFirst()
+            update(uiState)
         }
         binding.secondChoiceButton.setOnClickListener {
-            uiState = viewModel.chooseSecond()
-            update.invoke()
+            val uiState = viewModel.chooseSecond()
+            update(uiState)
         }
         binding.thirdChoiceButton.setOnClickListener {
-            uiState = viewModel.chooseThird()
-            update.invoke()
+            val uiState = viewModel.chooseThird()
+            update(uiState)
         }
         binding.forthChoiceButton.setOnClickListener {
-            uiState = viewModel.chooseForth()
-            update.invoke()
+            val uiState = viewModel.chooseForth()
+            update(uiState)
         }
         binding.checkButton.setOnClickListener {
-            uiState = viewModel.check()
-            update.invoke()
+            viewModel.check()
         }
         binding.nextButton.setOnClickListener {
-            uiState = viewModel.next()
-            update.invoke()
+            viewModel.next()
         }
 
-        uiState = viewModel.init(savedInstanceState == null)
-        update.invoke()
+        viewModel.init(savedInstanceState == null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.startUpdates(observer = update)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopUpdates()
     }
 
     override fun onDestroyView() {

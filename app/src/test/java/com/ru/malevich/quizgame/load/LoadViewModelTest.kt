@@ -1,10 +1,11 @@
 package com.ru.malevich.quizgame.load
 
-import com.ru.malevich.quizgame.MyViewModel
-import com.ru.malevich.quizgame.RunAsync
+import com.ru.malevich.quizgame.core.MyViewModel
+import com.ru.malevich.quizgame.core.RunAsync
 import com.ru.malevich.quizgame.di.ClearViewModel
 import com.ru.malevich.quizgame.load.data.LoadRepository
 import com.ru.malevich.quizgame.load.data.LoadResult
+import com.ru.malevich.quizgame.load.presentation.LoadUiObservable
 import com.ru.malevich.quizgame.load.presentation.LoadUiState
 import com.ru.malevich.quizgame.load.presentation.LoadViewModel
 import com.ru.malevich.quizgame.load.presentation.UiObservable
@@ -18,13 +19,13 @@ class LoadViewModelTest {
     private lateinit var viewModel: LoadViewModel
     private lateinit var fragment: FakeFragment
     private lateinit var repository: FakeLoadRepository
-    private lateinit var observable: FakeUiObservable
+    private lateinit var observable: FakeLoadUiObservable
     private lateinit var runAsync: FakeRunAsync
 
     @Before
     fun setup() {
         repository = FakeLoadRepository()
-        observable = FakeUiObservable()
+        observable = FakeLoadUiObservable.Base()
         runAsync = FakeRunAsync()
         viewModel = LoadViewModel(
             repository = repository,
@@ -113,7 +114,7 @@ private class FakeFragment : (LoadUiState) -> Unit {
 
 }
 
-private class FakeLoadRepository : LoadRepository {
+class FakeLoadRepository : LoadRepository {
     private var loadResult: LoadResult? = null
     fun expectedResult(loadResult: LoadResult) {
         this.loadResult = loadResult
@@ -126,40 +127,47 @@ private class FakeLoadRepository : LoadRepository {
     }
 }
 
-private class FakeUiObservable : UiObservable {
-    private var uiStateCached: LoadUiState? = null
-    private var observerCached: ((LoadUiState) -> Unit)? = null
+interface FakeUiObservable<T : Any> : UiObservable<T> {
+    var registerCalledCount: Int
+    var unregisterCalledCount: Int
+    val postUiStatesListCalled: MutableList<T>
 
-    var registerCalledCount = 0
-    override fun register(observer: (LoadUiState) -> Unit) {
-        registerCalledCount++
-        observerCached = observer
-        if (uiStateCached != null) {
-            observerCached!!.invoke(uiStateCached!!)
-            uiStateCached = null
+    abstract class Abstract<T : Any> : FakeUiObservable<T> {
+        private var uiStateCached: T? = null
+        private var observerCached: ((T) -> Unit)? = null
+
+        override var registerCalledCount = 0
+        override fun register(observer: (T) -> Unit) {
+            registerCalledCount++
+            observerCached = observer
+            if (uiStateCached != null) {
+                observerCached!!.invoke(uiStateCached!!)
+                uiStateCached = null
+            }
         }
-    }
 
-    var unregisterCalledCount = 0
-    override fun unregister() {
-        unregisterCalledCount++
-        observerCached = null
-    }
+        override var unregisterCalledCount = 0
+        override fun unregister() {
+            unregisterCalledCount++
+            observerCached = null
+        }
 
-    val postUiStatesListCalled = mutableListOf<LoadUiState>()
-    override fun postUiState(uiState: LoadUiState) {
-        postUiStatesListCalled.add(uiState)
-        if (observerCached == null) {
-            uiStateCached = uiState
-        } else {
-            observerCached!!.invoke(uiState)
-            uiStateCached = null
+        override val postUiStatesListCalled = mutableListOf<T>()
+        override fun postUiState(uiState: T) {
+            postUiStatesListCalled.add(uiState)
+            if (observerCached == null) {
+                uiStateCached = uiState
+            } else {
+                observerCached!!.invoke(uiState)
+                uiStateCached = null
+            }
         }
     }
 }
 
+
 @Suppress("UNCHECKED_CAST")
-private class FakeRunAsync : RunAsync {
+class FakeRunAsync : RunAsync {
     private var ui: (Any) -> Unit = {}
     private var result: Any? = null
     override fun <T : Any> handleAsync(
@@ -179,8 +187,10 @@ private class FakeRunAsync : RunAsync {
     }
 }
 private class FakeClear : ClearViewModel {
-    override fun clear(viewModelClass: Class<out MyViewModel>) {
-
+    override fun clear(viewModelClass: Class<out MyViewModel<*>>) {
     }
+}
 
+private interface FakeLoadUiObservable : FakeUiObservable<LoadUiState>, LoadUiObservable {
+    class Base : FakeUiObservable.Abstract<LoadUiState>(), FakeLoadUiObservable
 }

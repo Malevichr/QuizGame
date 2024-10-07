@@ -1,14 +1,14 @@
 package com.ru.malevich.quizgame.di
 
-import com.ru.malevich.quizgame.MyViewModel
+import com.ru.malevich.quizgame.core.MyViewModel
 
 interface ManageViewModels : ProvideViewModel, ClearViewModel {
     class Factory(
         private val make: ProvideViewModel
     ) : ManageViewModels {
-        private val viewModelMap = mutableMapOf<Class<out MyViewModel>, MyViewModel?>()
+        private val viewModelMap = mutableMapOf<Class<out MyViewModel<*>>, MyViewModel<*>?>()
 
-        override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T {
+        override fun <S : Any, T : MyViewModel<S>> makeViewModel(clazz: Class<T>): T {
             return if (viewModelMap[clazz] == null) {
                 val viewModel = make.makeViewModel(clazz)
                 viewModelMap[clazz] = viewModel
@@ -18,7 +18,7 @@ interface ManageViewModels : ProvideViewModel, ClearViewModel {
 
         }
 
-        override fun clear(viewModelClass: Class<out MyViewModel>) {
+        override fun clear(viewModelClass: Class<out MyViewModel<*>>) {
             viewModelMap[viewModelClass] = null
         }
     }
