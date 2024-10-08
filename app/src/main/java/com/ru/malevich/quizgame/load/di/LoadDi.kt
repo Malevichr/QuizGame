@@ -1,9 +1,9 @@
 package com.ru.malevich.quizgame.load.di
 
-import com.ru.malevich.quizgame.core.MyViewModel
-import com.ru.malevich.quizgame.di.Core
-import com.ru.malevich.quizgame.di.Module
-import com.ru.malevich.quizgame.di.ProvideViewModel
+import com.ru.malevich.quizgame.core.di.Core
+import com.ru.malevich.quizgame.core.di.Module
+import com.ru.malevich.quizgame.core.di.ProvideViewModel
+import com.ru.malevich.quizgame.core.presentation.MyViewModel
 import com.ru.malevich.quizgame.load.data.LoadRepository
 import com.ru.malevich.quizgame.load.data.cloud.QuizService
 import com.ru.malevich.quizgame.load.presentation.LoadUiObservable
@@ -63,6 +63,6 @@ class ProvideLoadViewModel(core: Core, nextLink: ProvideViewModel) :
         nextLink,
         LoadViewModel::class.java
     ) {
-    override fun module(): Module<out MyViewModel<*>> =
+    override fun module(): Module<out MyViewModel> =
         LoadModule(core)
 }

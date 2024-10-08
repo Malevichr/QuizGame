@@ -1,13 +1,13 @@
 package com.ru.malevich.quizgame.game.di
 
-import com.ru.malevich.quizgame.core.IntCache
-import com.ru.malevich.quizgame.core.MyViewModel
-import com.ru.malevich.quizgame.di.Core
-import com.ru.malevich.quizgame.di.Module
-import com.ru.malevich.quizgame.di.ProvideViewModel
-import com.ru.malevich.quizgame.game.GameRepository
-import com.ru.malevich.quizgame.game.GameUiObservable
-import com.ru.malevich.quizgame.game.GameViewModel
+import com.ru.malevich.quizgame.core.data.IntCache
+import com.ru.malevich.quizgame.core.di.Core
+import com.ru.malevich.quizgame.core.di.Module
+import com.ru.malevich.quizgame.core.di.ProvideViewModel
+import com.ru.malevich.quizgame.core.presentation.MyViewModel
+import com.ru.malevich.quizgame.game.data.GameRepository
+import com.ru.malevich.quizgame.game.presentation.GameUiObservable
+import com.ru.malevich.quizgame.game.presentation.GameViewModel
 
 class GameModule(
     private val core: Core
@@ -49,6 +49,6 @@ class ProvideGameViewModel(core: Core, nextLink: ProvideViewModel) :
         nextLink,
         GameViewModel::class.java
     ) {
-    override fun module(): Module<out MyViewModel<*>> =
+    override fun module(): Module<out MyViewModel> =
         GameModule(core)
 }

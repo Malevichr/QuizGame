@@ -1,7 +1,7 @@
 package com.ru.malevich.quizgame.load.presentation
 
 import com.ru.malevich.quizgame.R
-import com.ru.malevich.quizgame.game.NavigateToGame
+import com.ru.malevich.quizgame.game.presentation.NavigateToGame
 import com.ru.malevich.quizgame.views.error.ErrorUiState
 import com.ru.malevich.quizgame.views.error.UpdateError
 import com.ru.malevich.quizgame.views.visibilitybutton.UpdateVisibility

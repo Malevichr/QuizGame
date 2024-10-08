@@ -1,8 +1,8 @@
 package com.ru.malevich.quizgame.load.presentation
 
-import com.ru.malevich.quizgame.core.MyViewModel
-import com.ru.malevich.quizgame.core.RunAsync
-import com.ru.malevich.quizgame.di.ClearViewModel
+import com.ru.malevich.quizgame.core.di.ClearViewModel
+import com.ru.malevich.quizgame.core.presentation.MyViewModel
+import com.ru.malevich.quizgame.core.presentation.RunAsync
 import com.ru.malevich.quizgame.load.data.LoadRepository
 
 class LoadViewModel(

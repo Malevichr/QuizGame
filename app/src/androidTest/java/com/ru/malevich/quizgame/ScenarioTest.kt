@@ -5,7 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ru.malevich.quizgame.game.GamePage
 import com.ru.malevich.quizgame.gameover.GameOverPage
 import com.ru.malevich.quizgame.load.LoadPage
-import com.ru.malevich.quizgame.presentation.MainActivity
+import com.ru.malevich.quizgame.main.presentation.MainActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

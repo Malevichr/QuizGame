@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ru.malevich.quizgame.core.AbstractFragment
+import com.ru.malevich.quizgame.core.di.ProvideViewModel
+import com.ru.malevich.quizgame.core.presentation.AbstractFragment
 import com.ru.malevich.quizgame.databinding.FragmentLoadBinding
-import com.ru.malevich.quizgame.di.ProvideViewModel
-import com.ru.malevich.quizgame.game.NavigateToGame
+import com.ru.malevich.quizgame.game.presentation.NavigateToGame
 
 class LoadFragment : AbstractFragment<LoadUiState, LoadViewModel>(), UiObserver {
     private var _binding: FragmentLoadBinding? = null

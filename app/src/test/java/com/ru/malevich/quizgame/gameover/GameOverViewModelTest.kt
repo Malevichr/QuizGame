@@ -1,7 +1,9 @@
 package com.ru.malevich.quizgame.gameover
 
-import com.ru.malevich.quizgame.core.MyViewModel
-import com.ru.malevich.quizgame.di.ClearViewModel
+import com.ru.malevich.quizgame.core.di.ClearViewModel
+import com.ru.malevich.quizgame.core.presentation.MyViewModel
+import com.ru.malevich.quizgame.gameover.data.GameOverRepository
+import com.ru.malevich.quizgame.gameover.presentation.GameOverViewModel
 import com.ru.malevich.quizgame.views.statstextview.StatsUiState
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -31,6 +33,6 @@ private class FakeGameOverRepository : GameOverRepository {
 }
 
 private class FakeClear : ClearViewModel {
-    override fun clear(viewModelClass: Class<out MyViewModel<*>>) {
+    override fun clear(viewModelClass: Class<out MyViewModel>) {
     }
 }
