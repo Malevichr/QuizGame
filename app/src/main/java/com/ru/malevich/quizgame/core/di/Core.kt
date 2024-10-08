@@ -10,7 +10,8 @@ class Core(
 ) {
     val runAsync: RunAsync = RunAsync.Base()
     val cacheModule: CacheModule = CacheModule.Base(context)
+
+    val runUiTests = false
     val size = 10
-    val runUiTests = true
     val sharedPreferences = context.getSharedPreferences("quizAppData", Context.MODE_PRIVATE)
 }

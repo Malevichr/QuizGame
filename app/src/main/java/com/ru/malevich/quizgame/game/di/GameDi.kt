@@ -16,7 +16,7 @@ class GameModule(
         return if (core.runUiTests)
             GameViewModel(
                 repository = GameRepository.Fake(
-                    index = IntCache.Base(core.sharedPreferences, "indexKey", 0),
+                    index = IntCache.Base(core.sharedPreferences, "indexKey", core.size),
                     userChoiceIndex = IntCache.Base(core.sharedPreferences, "userChoiceIndex", -1),
                     corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
                     incorrects = IntCache.Base(core.sharedPreferences, "incorrects", 0),
@@ -28,7 +28,7 @@ class GameModule(
         else
             GameViewModel(
                 repository = GameRepository.Base(
-                    index = IntCache.Base(core.sharedPreferences, "indexKey", 0),
+                    index = IntCache.Base(core.sharedPreferences, "indexKey", core.size),
                     userChoiceIndex = IntCache.Base(core.sharedPreferences, "userChoiceIndex", -1),
                     corrects = IntCache.Base(core.sharedPreferences, "corrects", 0),
                     incorrects = IntCache.Base(core.sharedPreferences, "incorrects", 0),

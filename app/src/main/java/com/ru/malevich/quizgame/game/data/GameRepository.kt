@@ -17,6 +17,7 @@ interface GameRepository {
 
     suspend fun clearProgress()
 
+
     class Base(
         private val index: IntCache,
         private val userChoiceIndex: IntCache,
@@ -27,6 +28,7 @@ interface GameRepository {
         private val size: Int
     ) : GameRepository {
         override suspend fun questionAndChoices(): QuestionAndChoices {
+            index.save(index.read() % size)
             val id = index.read()
             val question = dao.question(id)
             val incorrects = dao.incorects(id)
@@ -92,6 +94,7 @@ interface GameRepository {
     ) : GameRepository {
 
         override suspend fun questionAndChoices(): QuestionAndChoices {
+            index.save(index.read() % 2)
             return list[index.read()]
         }
 

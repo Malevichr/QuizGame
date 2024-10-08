@@ -1,11 +1,14 @@
 package com.ru.malevich.quizgame
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ru.malevich.quizgame.game.GamePage
 import com.ru.malevich.quizgame.gameover.GameOverPage
 import com.ru.malevich.quizgame.load.LoadPage
 import com.ru.malevich.quizgame.main.presentation.MainActivity
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -29,6 +32,14 @@ class ScenarioTest {
             question = "What color is the sky?", choices = listOf(
             "blue", "green", "red", "yellow",
         ))
+    }
+
+    @After
+    fun clearPrefs() {
+        val sharedPreferences = ApplicationProvider
+            .getApplicationContext<Context>()
+            .getSharedPreferences("quizAppData", Context.MODE_PRIVATE)
+        sharedPreferences.edit().clear().apply()
     }
 
     @get:Rule

@@ -32,11 +32,18 @@ interface LoadUiState {
         }
     }
 
-    data class Error(private val message: String) : Abstract(
-        errorUiState = ErrorUiState.Show(R.string.no_internet_connection, message),
+    data class ErrorRes(private val messageId: Int = R.string.no_internet_connection) : Abstract(
+        errorUiState = ErrorUiState.ShowRes(messageId),
         retryVisibility = VisibilityUiState.Visible,
         progressVisibility = VisibilityUiState.Gone
     )
+
+    data class Error(private val message: String) : Abstract(
+        errorUiState = ErrorUiState.ShowMessage(message),
+        retryVisibility = VisibilityUiState.Visible,
+        progressVisibility = VisibilityUiState.Gone
+    )
+
 
     object Progress : Abstract(
         errorUiState = ErrorUiState.Hide,

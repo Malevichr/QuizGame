@@ -11,30 +11,14 @@ import com.ru.malevich.quizgame.core.presentation.Screen
 
 class MainActivity : AppCompatActivity(), Navigate, ProvideViewModel {
     override fun onCreate(savedInstanceState: Bundle?) {
-
-//        StrictMode.setThreadPolicy(
-//            StrictMode.ThreadPolicy.Builder()
-//                .detectDiskReads()
-//                .detectDiskWrites()
-//                .detectNetwork()
-//                .penaltyLog()
-//                .permitNetwork() // Разрешает сетевой доступ в StrictMode
-//                .build()
-//        )
-//        StrictMode.setVmPolicy(
-//            StrictMode.VmPolicy.Builder()
-//                .detectLeakedSqlLiteObjects()
-//                .detectLeakedClosableObjects()
-//                .penaltyLog()
-//                .penaltyDeath()
-//                .build()
-//        )
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_main)
-        if (savedInstanceState == null)
-            navigateToLoad()
+        val viewModel = makeViewModel(MainViewModel::class.java)
+        val screen = viewModel.firstScreen(savedInstanceState == null)
+
+        navigate(screen)
     }
 
     override fun navigate(screen: Screen) {

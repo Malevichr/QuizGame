@@ -4,6 +4,7 @@ import com.ru.malevich.quizgame.core.presentation.MyViewModel
 import com.ru.malevich.quizgame.game.di.ProvideGameViewModel
 import com.ru.malevich.quizgame.gameover.di.ProvideGameOverViewModel
 import com.ru.malevich.quizgame.load.di.ProvideLoadViewModel
+import com.ru.malevich.quizgame.main.di.ProvideMainViewModel
 
 interface ProvideViewModel {
     fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T
@@ -33,6 +34,7 @@ interface ProvideViewModel {
             chain = ProvideGameViewModel(core, chain)
             chain = ProvideGameOverViewModel(core, chain)
             chain = ProvideLoadViewModel(core, chain)
+            chain = ProvideMainViewModel(core, chain)
         }
 
         override fun <T : MyViewModel> makeViewModel(clazz: Class<T>): T =

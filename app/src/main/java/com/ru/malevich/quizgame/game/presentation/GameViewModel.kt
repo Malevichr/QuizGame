@@ -13,6 +13,7 @@ class GameViewModel(
     private val runAsync: RunAsync
 ) : MyViewModel.Abstract<GameUiState>(observable) {
 
+
     private val updateUi = { it: GameUiState ->
         observable.postUiState(it)
     }
