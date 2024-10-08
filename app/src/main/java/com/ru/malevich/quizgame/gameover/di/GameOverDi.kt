@@ -1,12 +1,12 @@
 package com.ru.malevich.quizgame.gameover.di
 
-import com.ru.malevich.quizgame.core.IntCache
-import com.ru.malevich.quizgame.core.MyViewModel
-import com.ru.malevich.quizgame.di.Core
-import com.ru.malevich.quizgame.di.Module
-import com.ru.malevich.quizgame.di.ProvideViewModel
-import com.ru.malevich.quizgame.gameover.GameOverRepository
-import com.ru.malevich.quizgame.gameover.GameOverViewModel
+import com.ru.malevich.quizgame.core.data.IntCache
+import com.ru.malevich.quizgame.core.di.Core
+import com.ru.malevich.quizgame.core.di.Module
+import com.ru.malevich.quizgame.core.di.ProvideViewModel
+import com.ru.malevich.quizgame.core.presentation.MyViewModel
+import com.ru.malevich.quizgame.gameover.data.GameOverRepository
+import com.ru.malevich.quizgame.gameover.presentation.GameOverViewModel
 
 class ProvideGameOverViewModel(
     core: Core,
@@ -16,7 +16,7 @@ class ProvideGameOverViewModel(
     nextLink,
     GameOverViewModel::class.java
 ) {
-    override fun module(): Module<out MyViewModel<*>> =
+    override fun module(): Module<out MyViewModel> =
         GameOverModule(core)
 }
 

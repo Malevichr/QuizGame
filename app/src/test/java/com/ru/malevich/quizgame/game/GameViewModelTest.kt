@@ -1,7 +1,13 @@
 package com.ru.malevich.quizgame.game
 
-import com.ru.malevich.quizgame.core.MyViewModel
-import com.ru.malevich.quizgame.di.ClearViewModel
+import com.ru.malevich.quizgame.core.di.ClearViewModel
+import com.ru.malevich.quizgame.core.presentation.MyViewModel
+import com.ru.malevich.quizgame.game.data.CorrectAndUserChoiceIndexes
+import com.ru.malevich.quizgame.game.data.GameRepository
+import com.ru.malevich.quizgame.game.data.QuestionAndChoices
+import com.ru.malevich.quizgame.game.presentation.GameUiObservable
+import com.ru.malevich.quizgame.game.presentation.GameUiState
+import com.ru.malevich.quizgame.game.presentation.GameViewModel
 import com.ru.malevich.quizgame.load.FakeRunAsync
 import com.ru.malevich.quizgame.load.FakeUiObservable
 import com.ru.malevich.quizgame.views.choicebutton.ChoiceUiState
@@ -234,7 +240,7 @@ private class FakeRepository : GameRepository {
 }
 
 private class FakeClear : ClearViewModel {
-    override fun clear(viewModelClass: Class<out MyViewModel<*>>) {
+    override fun clear(viewModelClass: Class<out MyViewModel>) {
     }
 }
 

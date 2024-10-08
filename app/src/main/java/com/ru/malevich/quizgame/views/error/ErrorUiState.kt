@@ -12,14 +12,20 @@ interface ErrorUiState : Serializable {
         }
     }
 
-    data class Show(private val textResId: Int, private val message: String = "") : ErrorUiState {
+    data class ShowRes(private val textResId: Int) : ErrorUiState {
         override fun update(errorText: UpdateError) {
-//            if (message == "")
-                errorText.updateTextResId(textResId)
-//            else
-//                errorText.updateText(message)
+            errorText.updateTextResId(textResId)
 
             errorText.updateVisibility(View.VISIBLE)
         }
     }
+
+    data class ShowMessage(private val message: String) : ErrorUiState {
+        override fun update(errorText: UpdateError) {
+            errorText.updateText(message)
+
+            errorText.updateVisibility(View.VISIBLE)
+        }
+    }
+
 }

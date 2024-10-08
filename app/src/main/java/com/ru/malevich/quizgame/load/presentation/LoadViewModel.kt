@@ -1,9 +1,12 @@
 package com.ru.malevich.quizgame.load.presentation
 
-import com.ru.malevich.quizgame.core.MyViewModel
-import com.ru.malevich.quizgame.core.RunAsync
-import com.ru.malevich.quizgame.di.ClearViewModel
+import com.ru.malevich.quizgame.R
+import com.ru.malevich.quizgame.core.di.ClearViewModel
+import com.ru.malevich.quizgame.core.presentation.MyViewModel
+import com.ru.malevich.quizgame.core.presentation.RunAsync
+import com.ru.malevich.quizgame.load.data.BackendError
 import com.ru.malevich.quizgame.load.data.LoadRepository
+import com.ru.malevich.quizgame.load.data.NoInternetConnectionException
 
 class LoadViewModel(
     private val repository: LoadRepository,
@@ -16,16 +19,23 @@ class LoadViewModel(
             observable.postUiState(LoadUiState.Progress)
             runAsync.handleAsync(
                 viewModelScope,
-                {
-                    val loadResult = repository.load()
-                    if (loadResult.isSuccessful()) {
+                heavyOperation = {
+                    try {
+                        val loadResult = repository.load()
                         clearViewModel.clear(this.javaClass)
                         LoadUiState.Success
-                    } else
-                        LoadUiState.Error(loadResult.message())
-            }) { result ->
-                observable.postUiState(result)
-            }
+                    } catch (e: Exception) {
+                        when (e) {
+                            is NoInternetConnectionException -> LoadUiState.ErrorRes()
+                            is BackendError -> LoadUiState.Error(e.message)
+                            else -> LoadUiState.ErrorRes(R.string.service_unavailable)
+                        }
+                    }
+                },
+                updateUi = { result ->
+                    observable.postUiState(result)
+                }
+            )
 
         }
     }
